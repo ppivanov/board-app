@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/michaelsantos/Projects/BoardWebApp/BoardWebApp/BoardWebApp.csproj": {}
+    "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj": {}
   },
   "projects": {
-    "/Users/michaelsantos/Projects/BoardWebApp/BoardWebApp/BoardWebApp.csproj": {
+    "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/michaelsantos/Projects/BoardWebApp/BoardWebApp/BoardWebApp.csproj",
+        "projectUniqueName": "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj",
         "projectName": "BoardWebApp",
-        "projectPath": "/Users/michaelsantos/Projects/BoardWebApp/BoardWebApp/BoardWebApp.csproj",
+        "projectPath": "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj",
         "packagesPath": "/Users/michaelsantos/.nuget/packages/",
-        "outputPath": "/Users/michaelsantos/Projects/BoardWebApp/BoardWebApp/obj/",
+        "outputPath": "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/michaelsantos/.config/NuGet/NuGet.Config"
@@ -20,6 +20,7 @@
           "netcoreapp3.1"
         ],
         "sources": {
+          "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -35,6 +36,20 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[0.66.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

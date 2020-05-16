@@ -1,4 +1,31 @@
 ﻿<Properties StartupConfiguration="{FAD6E059-04A1-4F9F-9891-2F71B752C099}|Default">
-  <MonoDevelop.Ide.ItemProperties.BoardWebApp FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BoardWebApp/Startup.cs">
+    <Files>
+      <File FileName="BoardWebApp/Startup.cs" Line="8" Column="1" />
+      <File FileName="BoardWebApp/BoardAppDB.cs" />
+      <File FileName="BoardWebApp/Controllers/HomeController.cs" />
+      <File FileName="BoardWebApp/DataBase/DBConnection.cs" />
+      <File FileName="BoardWebApp/Program.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="BoardWebApp" expanded="True">
+            <Node name="BoardWebApp" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="DataBase" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.BoardWebApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
