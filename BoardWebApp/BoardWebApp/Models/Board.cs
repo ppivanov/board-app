@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BoardWebApp.Models
 {
@@ -16,5 +13,9 @@ namespace BoardWebApp.Models
         public List<User> BoardMembers { get; set; }
         public Project ForProject { get; set; }
 
+        public Board()
+        {
+
+        }
     }
 }

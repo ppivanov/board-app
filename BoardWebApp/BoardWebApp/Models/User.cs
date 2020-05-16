@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
 namespace BoardWebApp.Models
 {
     public class User
@@ -16,6 +12,11 @@ namespace BoardWebApp.Models
         public List<Board> memberOfBoards { get; set; }
         public List<Project> memberOfProject { get; set; }
         public List<Ticket> assignedTickets { get; set; }
+
+        public User()
+        {
+
+        }
 
     }
 }

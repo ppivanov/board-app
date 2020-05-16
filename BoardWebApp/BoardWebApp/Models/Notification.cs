@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace BoardWebApp.Models
 {
     public class Notification
@@ -11,5 +7,10 @@ namespace BoardWebApp.Models
         public string NotificationText { get; set; }
         public User ForUser { get; set; }
         public User FromUser { get; set; }
+
+        public Notification()
+        {
+
+        }
     }
 }

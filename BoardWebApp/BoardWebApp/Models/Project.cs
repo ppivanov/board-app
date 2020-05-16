@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BoardWebApp.Models
 {
@@ -13,5 +10,10 @@ namespace BoardWebApp.Models
         public User ProjectOwner { get; set; }
         public User ProjectScrumMaster { get; set; }
         public List<User> ProjectMembers { get; set; }
+        
+        public Project()
+        {
+
+        }
     }
 }
