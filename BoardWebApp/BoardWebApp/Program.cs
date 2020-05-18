@@ -15,20 +15,20 @@ namespace BoardWebApp
         public static void Main(string[] args)
         {
             var dbCob = DBConnection.Instance();
-            dbCob.DatabaseName = "BoardApp";
-            try
-            {
-                if (dbCob.IsConnect())
-                {
-                    Console.WriteLine("Connection Success!");
-                    dbCob.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error: ->" + e.Message);
+            dbCob.DatabaseName = "BoardWebApp";
+            //try
+            //{
+            //    if (dbCob.IsConnect())
+            //    {
+            //        Console.WriteLine("Connection Success!");
+            //        dbCob.Close();
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Error: ->" + e.Message);
 
-            }
+            //}
             CreateHostBuilder(args).Build().Run();
         }
 

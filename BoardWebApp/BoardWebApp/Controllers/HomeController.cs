@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoardWebApp.Models;
+using BoardWebApp.DataBase;
 
 namespace BoardWebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        private DBLogic DBConn { get; set; }
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            DBConn = new DBLogic();
         }
 
-        public IActionResult Index()
+        public List<User> Index()
         {
-            return View();
+            return DBConn.getAllUsers();
         }
 
         public IActionResult Privacy()
@@ -31,6 +33,7 @@ namespace BoardWebApp.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
