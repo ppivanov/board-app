@@ -92,7 +92,6 @@ D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\runtimes\
 D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
-D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.csprojAssemblyReference.cache
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.RazorAssemblyInfo.cache
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.RazorAssemblyInfo.cs
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.AssemblyInfoInputs.cache
@@ -116,6 +115,9 @@ D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\staticweb
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.dll
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.pdb
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.genruntimeconfig.cache
+D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\Dapper.dll
+D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\libman.json
+D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.csprojAssemblyReference.cache
+D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.csproj.CoreCompileInputs.cache
 D:\Computing\board-app\BoardWebApp\BoardWebApp\obj\Debug\netcoreapp3.1\BoardWebApp.MvcApplicationPartsAssemblyInfo.cache
-D:\Computing\board-app\BoardWebApp\BoardWebApp\bin\Debug\netcoreapp3.1\Dapper.dll

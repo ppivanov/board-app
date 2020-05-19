@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoardWebApp.Models;
 using BoardWebApp.DataBase;
+using System.Data.SqlClient;
+using System.IO.Pipelines;
+using Newtonsoft.Json.Linq;
 
 namespace BoardWebApp.Controllers
 {
@@ -20,9 +23,19 @@ namespace BoardWebApp.Controllers
             DBConn = new DBLogic();
         }
 
-        public List<User> Index()
+        public JObject Index()
         {
-            return DBConn.getAllUsers();
+            //SqlDataReader reader = DBConn.getAllUsers();
+            //string allUsers = "";
+            //while (reader.Read())
+            //{
+            //    allUsers += reader;
+            //}
+            object res = DBConn.getAllUsers();
+            string resString = res.ToString();
+            resString = resString.Substring(1, (resString.Length - 2));
+            Console.WriteLine(resString);
+            return JObject.Parse(resString);
         }
 
         public IActionResult Privacy()

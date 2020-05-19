@@ -27,6 +27,7 @@
           "Dapper": "2.0.35",
           "Microsoft.EntityFrameworkCore": "3.1.4",
           "MySqlConnector": "0.66.0",
+          "Newtonsoft.Json": "12.0.3",
           "System.Data.SqlClient": "4.8.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -544,6 +545,17 @@
         },
         "compile": {
           "lib/netcoreapp3.0/MySqlConnector.dll": {}
+        }
+      },
+      "Newtonsoft.Json/12.0.3": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.3.23909"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.native.System.Data.SqlClient.sni/4.7.0": {
@@ -2406,6 +2418,13 @@
       "sha512": "sha512-laGcF5yxoWsBaoYJVkJXxsxiyIpz2lQn8FobpZiSGTWHEJQfhIlKHxhmXyUwD9WOsINKYJ3kmGNqkFojZW3VSA==",
       "path": "mysqlconnector/0.66.0",
       "hashPath": "mysqlconnector.0.66.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "path": "newtonsoft.json/12.0.3",
+      "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
     },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",
