@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Computing\\board-app\\BoardWebApp\\BoardWebApp\\BoardWebApp.csproj": {}
+    "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj": {}
   },
   "projects": {
-    "D:\\Computing\\board-app\\BoardWebApp\\BoardWebApp\\BoardWebApp.csproj": {
+    "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Computing\\board-app\\BoardWebApp\\BoardWebApp\\BoardWebApp.csproj",
+        "projectUniqueName": "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj",
         "projectName": "BoardWebApp",
-        "projectPath": "D:\\Computing\\board-app\\BoardWebApp\\BoardWebApp\\BoardWebApp.csproj",
-        "packagesPath": "C:\\Users\\noima\\.nuget\\packages\\",
-        "outputPath": "D:\\Computing\\board-app\\BoardWebApp\\BoardWebApp\\obj\\",
+        "projectPath": "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/BoardWebApp.csproj",
+        "packagesPath": "/Users/michaelsantos/.nuget/packages/",
+        "outputPath": "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\noima\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/michaelsantos/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,13 +41,17 @@
               "target": "Package",
               "version": "[3.1.4, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
             "MySqlConnector": {
               "target": "Package",
               "version": "[0.66.0, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",
-              "version": "[4.8.1, )"
+              "version": "[4.6.1, )"
             }
           },
           "imports": [
@@ -69,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.200/RuntimeIdentifierGraph.json"
         }
       }
     }

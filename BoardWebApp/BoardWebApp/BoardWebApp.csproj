@@ -9,9 +9,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="MySqlConnector" Version="0.66.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataBase\" />
+    <Folder Include="Repository\" />
+    <Folder Include="Logic\" />
+    <Folder Include="BoardAppDbContext\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="BoardAppDB.cs" />
+    <Compile Remove="DataBase\DBConnection.cs" />
+    <Compile Remove="Repository\DBConnection.cs" />
   </ItemGroup>
 </Project>

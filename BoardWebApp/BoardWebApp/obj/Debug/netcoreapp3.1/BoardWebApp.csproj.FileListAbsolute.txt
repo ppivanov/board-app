@@ -57,3 +57,16 @@
 /Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
 /Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll
 /Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/mono_crash.1978d5b40a.0.json
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/michaelsantos/Documents/sideProject/board-app/BoardWebApp/BoardWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll

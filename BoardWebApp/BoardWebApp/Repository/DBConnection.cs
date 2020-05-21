@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
 
 namespace BoardWebApp.DataBase
 {

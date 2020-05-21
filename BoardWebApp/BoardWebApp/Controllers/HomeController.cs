@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoardWebApp.Models;
+using BoardWebApp.Repository;
 
 namespace BoardWebApp.Controllers
 {
@@ -18,9 +16,10 @@ namespace BoardWebApp.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public List<User> Index()
         {
-            return View();
+            var usrObj = new UserRepository();
+            return usrObj.getAllUsers();
         }
 
         public IActionResult Privacy()
