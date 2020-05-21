@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Data.SqlClient;
+<<<<<<< HEAD:BoardWebApp/BoardWebApp/Repository/DBConnection.cs
+=======
+//using MySql.Data.MySqlClient;
+>>>>>>> 6b45137aa23d6c513470829ed86403afa659e5bd:BoardWebApp/BoardWebApp/DataBase/DBConnection.cs
 
 namespace BoardWebApp.DataBase
 {
@@ -38,19 +42,19 @@ namespace BoardWebApp.DataBase
                 _instance = new DBConnection();
             return _instance;// Returns a new instance connection to the DB
         }
-        public bool IsConnect()
-        {
-            if (Connection == null)
-            {
-                if (String.IsNullOrEmpty(dbName))
-                    return false;
-                string connstring = string.Format("Server=localhost; Database={0};User Id=sa; Password=Password1234", dbName);
-                connection = new SqlConnection(connstring);
-                connection.Open();
-            }
+        //public bool IsConnect()
+        //{
+        //    if (Connection == null)
+        //    {
+        //        if (String.IsNullOrEmpty(dbName))
+        //            return false;   
+        //        //string connstring = string.Format(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog={0};Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False", dbName);
+        //        connection = new SqlConnection(connstring);
+        //        connection.Open();
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         public void Close()
         {

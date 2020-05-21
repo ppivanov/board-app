@@ -1,43 +1,36 @@
-﻿<Properties StartupConfiguration="{FAD6E059-04A1-4F9F-9891-2F71B752C099}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../../Library/Frameworks/Mono.framework/Versions/6.6.0/lib/mono/msbuild/Current/bin/Roslyn/Microsoft.CSharp.Core.targets">
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="BoardWebApp/Models/User.cs">
     <Files>
-      <File FileName="BoardWebApp/Startup.cs" Line="27" Column="71" />
-      <File FileName="BoardWebApp/BoardAppDB.cs" />
-      <File FileName="BoardWebApp/Controllers/HomeController.cs" Line="22" Column="41" />
-      <File FileName="BoardWebApp/Program.cs" Line="17" Column="1" />
+      <File FileName="BoardWebApp/Startup.cs" Line="44" Column="56" />
+      <File FileName="BoardWebApp/Controllers/HomeController.cs" Line="63" Column="1" />
+      <File FileName="BoardWebApp/Program.cs" Line="51" Column="1" />
       <File FileName="BoardWebApp/Models/ErrorViewModel.cs" />
       <File FileName="BoardWebApp/Models/BoardType.cs" />
-      <File FileName="BoardWebApp/Models/TicketType.cs" />
-      <File FileName="BoardWebApp/Models/BoardColumn.cs" />
+      <File FileName="BoardWebApp/Models/TicketType.cs" Line="1" Column="1" />
+      <File FileName="BoardWebApp/Models/BoardColumn.cs" Line="16" Column="10" />
       <File FileName="BoardWebApp/Models/SubTask.cs" />
-      <File FileName="BoardWebApp/Models/User.cs" Line="9" Column="45" />
+      <File FileName="BoardWebApp/Models/User.cs" Line="14" Column="33" />
       <File FileName="BoardWebApp/Models/Project.cs" />
       <File FileName="BoardWebApp/Models/Notification.cs" />
-      <File FileName="BoardWebApp/Models/Board.cs" />
+      <File FileName="BoardWebApp/Models/Board.cs" Line="1" Column="1" />
       <File FileName="BoardWebApp/appsettings.Development.json" Line="10" Column="6" />
       <File FileName="BoardWebApp/appsettings.json" />
-      <File FileName="BoardWebApp/BoardAppDbContext/BoardWebContext.cs" Line="10" Column="62" />
-      <File FileName="BoardWebApp/Repository/UserRepository.cs" Line="18" Column="42" />
-      <File FileName="BoardWebApp/Repository/DBConnection.cs" Line="1" Column="1" />
+      <File FileName="BoardWebApp/BoardAppDbContext/BoardWebContext.cs" Line="20" Column="46" />
+      <File FileName="BoardWebApp/Repository/UserRepository.cs" Line="17" Column="14" />
+      <File FileName="BoardWebApp/Repository/DBConnection.cs" Line="65" Column="1" />
       <File FileName="../../../../../../Library/Frameworks/Mono.framework/Versions/6.6.0/lib/mono/msbuild/Current/bin/Roslyn/Microsoft.CSharp.Core.targets" Line="59" Column="5" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BoardWebApp" expanded="True">
-            <Node name="BoardWebApp" expanded="True">
-              <Node name="BoardAppDbContext" expanded="True" />
-              <Node name="Controllers" expanded="True" />
-              <Node name="Repository" expanded="True" />
-              <Node name="Program.cs" selected="True" />
-            </Node>
+            <Node name="BoardWebApp" selected="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.BoardWebApp PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
