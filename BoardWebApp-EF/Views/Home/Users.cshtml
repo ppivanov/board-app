@@ -1,0 +1,10 @@
+﻿@model List<BoardWebApp.Models.User>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>Users</h1>
+@foreach(var user in Model)
+{
+    <h2>@(user.FirstName + " " + user.LastName + " " + user.Email)</h2>
+}
