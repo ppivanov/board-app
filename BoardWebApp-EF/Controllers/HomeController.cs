@@ -12,10 +12,12 @@ namespace BoardWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private BoardWebAppContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BoardWebAppContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -30,8 +32,8 @@ namespace BoardWebApp.Controllers
 
         public IActionResult Users()
         {
-            BoardWebAppContext context = new BoardWebAppContext();
-            return View(context.User.ToList());
+            List<User> allUsers = _dbContext.User.ToList();
+            return View(allUsers);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
