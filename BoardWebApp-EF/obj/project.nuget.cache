@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Pgoxh8qhNW4hhL27Nz9yNM2+pYFLUYGuSsTkAJFxVC3E8Gxzz1N5ENDPxhuHhmpmOoIy7bVoNY38+AJjon1gsw==",
+  "dgSpecHash": "keZuEDH4Y4O44jMOvd9ahILWTkPYUQ1M3OJJg7kP2FQV2VlXg053bZsgh4UVBg9hBTWqgeBsi7yNOlyfw/Fm0w==",
   "success": true,
-  "projectFilePath": "D:\\Computing\\board-app\\BoardWebApp-EF\\BoardWebApp.csproj",
+  "projectFilePath": "D:\\Computing\\test-board-app-mapping\\BoardWebApp\\BoardWebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noima\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\noima\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

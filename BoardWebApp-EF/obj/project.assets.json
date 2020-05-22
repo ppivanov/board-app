@@ -7307,11 +7307,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Computing\\board-app\\BoardWebApp-EF\\BoardWebApp.csproj",
+      "projectUniqueName": "D:\\Computing\\test-board-app-mapping\\BoardWebApp\\BoardWebApp.csproj",
       "projectName": "BoardWebApp",
-      "projectPath": "D:\\Computing\\board-app\\BoardWebApp-EF\\BoardWebApp.csproj",
+      "projectPath": "D:\\Computing\\test-board-app-mapping\\BoardWebApp\\BoardWebApp.csproj",
       "packagesPath": "C:\\Users\\noima\\.nuget\\packages\\",
-      "outputPath": "D:\\Computing\\board-app\\BoardWebApp-EF\\obj\\",
+      "outputPath": "D:\\Computing\\test-board-app-mapping\\BoardWebApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\noima\\AppData\\Roaming\\NuGet\\NuGet.Config",
