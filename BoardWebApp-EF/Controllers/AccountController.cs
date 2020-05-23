@@ -4,6 +4,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using BoardWebApp.Models;
 using BoardWebApp.ViewModels;
+using RestSharp;
+using Microsoft.AspNetCore.Http;
+using System.Net;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,7 +21,6 @@ namespace BoardWebApp.Controllers
             //Console.WriteLine(_dbContext.User.Where(user => user.Email == "notaracist@murica.com").FirstOrDefault().Email);
         }
 
-        // GET: /<controller>/
         [HttpGet]
         public IActionResult Register()
         {
@@ -29,7 +31,7 @@ namespace BoardWebApp.Controllers
         public IActionResult Register(SendRegisterationModel registrationInformation)
         {
             string registrationSuccessful = "Thank you for registering! You can now log into your new account.";
-            UserRegistrationModel.UserRegistrationValidations(registrationInformation, _dbContext);
+            UserRegistrationModel.UserRegistrationValidationsStatic(registrationInformation, _dbContext);
             if (UserRegistrationModel.PassedAllRegistrationValidations(registrationInformation.ValidationErrorMessages))
             {
                 if (UserRegistrationModel.SaveUser(registrationInformation.userRegistrationModel, _dbContext))
@@ -38,26 +40,37 @@ namespace BoardWebApp.Controllers
                     //return RedirectToAction("Account", "Login");
                 }
             }
-            //TODO
             return View(registrationInformation);
         }
 
-        //public bool EmailBelongsToAnotherUser(string value)
-        //{
-        //    var EmailStore = _dbContext.User.Where(user => user.Email == value);
-        //    Console.WriteLine("AccountController dbContext # of results = " + EmailStore.ToArray().Length);
-        //    var userFromQuery = EmailStore.FirstOrDefault();
-        //    //If an email is already acossiated with another user 
-        //    if (userFromQuery != null)
-        //    {
-        //        Console.WriteLine("userFromQuery's Email = " + userFromQuery.Email);
-        //        return true;
-        //    }
-        //    // else the email is not related to any users and is free to use
-        //    else
-        //        return false;
-        //}
-        
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(SendLoginModel LoginInformation)
+        {
+            string LoginSuccessful = "Login successful!";
+            if (UserLoginModel.LoginSuccess(LoginInformation, _dbContext))
+            {
+                string AuthenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(LoginInformation.userLoginModel.Email, _dbContext);
+                Console.WriteLine("Login successful!");
+        /****** COOKIE SETUP *******/
+                CookieOptions cookieOptions = new CookieOptions();
+                cookieOptions.MaxAge = new TimeSpan(1, 30, 0); // hours, minutes, seconds
+                Response.Cookies.Append("BoardAppSessionCookie", AuthenticationHashForCookie, cookieOptions);
+        /****** COOKIE SETUP *******/
+                return RedirectToAction("Index", "Home", new { @message = LoginSuccessful });
+            }
+            else
+            {
+                Console.WriteLine("Log in failed!");
+                return View(LoginInformation);
+            }
+        }
+
     }
 }
 

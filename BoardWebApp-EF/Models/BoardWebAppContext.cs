@@ -317,6 +317,11 @@ namespace BoardWebApp.Models
                     .IsRequired()
                     .HasColumnName("password")
                     .HasMaxLength(499);
+                
+                entity.Property(e => e.EmailHash)
+                    .IsRequired()
+                    .HasColumnName("email_hash")
+                    .HasMaxLength(499);
             });
 
             OnModelCreatingPartial(modelBuilder);

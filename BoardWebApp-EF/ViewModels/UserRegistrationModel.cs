@@ -1,5 +1,6 @@
 ﻿using BoardWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,6 @@ namespace BoardWebApp.ViewModels
 {
     public class UserRegistrationModel
     {
-
         [Display(Name = "First name")]
         [Required]
         public string FirstName { get; set; }
@@ -52,11 +52,13 @@ namespace BoardWebApp.ViewModels
             try
             {
                 string hashedPassword = Models.User.ComputeSha256HashForString(newUserData.Password);
+                string hashedEmail = Models.User.ComputeSha256HashForString(newUserData.Email);
                 var newUser = new User {
                     Email = newUserData.Email,
                     FirstName = newUserData.FirstName,
                     LastName = newUserData.LastName,
-                    Password = hashedPassword
+                    Password = hashedPassword,
+                    EmailHash = hashedEmail
                 };
 
                 dbContext.Add<User>(newUser);
@@ -83,19 +85,19 @@ namespace BoardWebApp.ViewModels
         // It is meant to be called from AccountController that will pass in the parameters:
         //  - registrationInformation     => Holds all the data from the page. Has a List<string> meant for validation error messages.
         //  - dbContext                   => Holds the BoardWebAppContext used to run queries against the database.
-        public static void UserRegistrationValidations(SendRegisterationModel registrationInformation, BoardWebAppContext dbContext)
+        public static void UserRegistrationValidationsStatic(SendRegisterationModel registrationInformation, BoardWebAppContext dbContext)
         {
             UserRegistrationModel newUserData = registrationInformation.userRegistrationModel;
             List<string> ValidationErrorMessages = registrationInformation.ValidationErrorMessages;
 
-            FieldsNotEmptyValidations(newUserData, ValidationErrorMessages);
-            EmailValidations(newUserData.Email, ValidationErrorMessages, dbContext);
-            PasswordValidatons(newUserData.Password, newUserData.ConfirmPassword, ValidationErrorMessages);
+            FieldsNotEmptyValidationsStatic(newUserData, ValidationErrorMessages);
+            EmailValidationsStatic(newUserData.Email, ValidationErrorMessages, dbContext);
+            PasswordValidatonsStatic(newUserData.Password, newUserData.ConfirmPassword, ValidationErrorMessages);
         }
 
         /************ ------------ FIELDS NOT EMPTY VALIDATIONS ------------ ************/
-        public static void FieldsNotEmptyValidations(UserRegistrationModel newUserData, List<string> ValidationErrorMessages)
-        {
+        public static void FieldsNotEmptyValidationsStatic(UserRegistrationModel newUserData, List<string> ValidationErrorMessages)
+        {   
             if (String.IsNullOrEmpty(newUserData.Email)) { ValidationErrorMessages.Add("Email is required"); }
             if (String.IsNullOrEmpty(newUserData.FirstName)) { ValidationErrorMessages.Add("First name is required"); }
             if (String.IsNullOrEmpty(newUserData.LastName)) { ValidationErrorMessages.Add("Last name is required"); }
@@ -109,7 +111,7 @@ namespace BoardWebApp.ViewModels
         /************ ------------ EMAIL VALIDATIONS ------------ ************/
         // This method runs all email validations.
         // dbContext is passed to all validating 'submethods' from AccountController to avoid creating multiple instances.
-        public static void EmailValidations(string incomingEmail, List<string> ValidationErrorMessages, BoardWebAppContext dbContext) {
+        public static void EmailValidationsStatic(string incomingEmail, List<string> ValidationErrorMessages, BoardWebAppContext dbContext) {
 
             // If the incoming email fails any Validations, the ValidationErrorMessages list will be updated.
             IsIncomingEmailInValidEmailFormatForErrorMessage(incomingEmail, ValidationErrorMessages);
@@ -122,14 +124,14 @@ namespace BoardWebApp.ViewModels
         // NB:Lists are passed by reference, so updating a List<> or array in a method is actually updating the original collection;
         public static void IsIncomingEmailInValidEmailFormatForErrorMessage(string incomingEmail, List<string> ValidationErrorMessages)
         {
-            if (IsIncomingEmailInValidEmailFormat(incomingEmail) == false)
+            if (IsIncomingEmailInValidEmailFormatStatic(incomingEmail) == false)
             {
                 ValidationErrorMessages.Add("Please enter a valid email address!");
             }
         }
 
         // Returns true if the email is in an acceptable form and false otherwise.
-        public static bool IsIncomingEmailInValidEmailFormat(string incomingEmail)
+        public static bool IsIncomingEmailInValidEmailFormatStatic(string incomingEmail)
         {
             try
             {
@@ -171,9 +173,9 @@ namespace BoardWebApp.ViewModels
 
         /************ ------------ PASSWORD VALIDATIONS ------------ ************/
 
-        public static void PasswordValidatons(string password, string confirmPassword, List<string> ValidationErrorMessages)
+        public static void PasswordValidatonsStatic(string password, string confirmPassword, List<string> ValidationErrorMessages)
         {
-            if (PasswordMatchesAtLeastThreeComplexityConditions(password) == false)
+            if (PasswordMatchesAtLeastThreeComplexityConditionsStatic(password) == false)
             {
                 ValidationErrorMessages.Add("Password must be 8 to 32 characters long and must match at least 3 of the conditions:" +
                     "<br/>- has 1 lower case letter<br/>- has 1 upper case letter<br/>- has 1 numeric character<br/>- has 1 special character");
@@ -185,7 +187,7 @@ namespace BoardWebApp.ViewModels
             }
         }
 
-        public static bool PasswordMatchesAtLeastThreeComplexityConditions(string password) {
+        public static bool PasswordMatchesAtLeastThreeComplexityConditionsStatic(string password) {
 
             if (Regex.IsMatch(password,
                 @"(^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$)?(^(?=.*\d)(?=.*[a-z])(?=.*[@#$%^&+=]).{8,32}$)?(^

@@ -24,6 +24,7 @@ namespace BoardWebApp.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
+        public string EmailHash { get; set; }
 
         public virtual ICollection<Board> Board { get; set; }
         public virtual ICollection<BoardMember> BoardMember { get; set; }
