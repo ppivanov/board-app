@@ -11,6 +11,8 @@ namespace BoardWebApp.ViewModels
         public UserRegistrationModel userRegistrationModel { get; set; }
         public List<string> ValidationErrorMessages { get; set; }
 
-        public SendRegistrationModel() {  }
+        public SendRegistrationModel() {
+            ValidationErrorMessages = new List<string>();
+        }
     }
 }
