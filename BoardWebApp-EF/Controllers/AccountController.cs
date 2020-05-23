@@ -70,6 +70,18 @@ namespace BoardWebApp.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            string LogoutSuccessFul = "Logout successful!";
+            if (Request.Cookies["BoardAppSessionCookie"] != null)
+            {
+                Response.Cookies.Delete("BoardAppSessionCookie");
+            }
+
+            return RedirectToAction("Login", "Account", new { @message = LogoutSuccessFul });
+        }
+
     }
 }
 
