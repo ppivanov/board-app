@@ -18,7 +18,7 @@ namespace BoardWebApp.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
         
-        public static bool LoginSuccess(SendLoginModel LoginInformation, BoardWebAppContext dbContext)
+        public static bool LoginCredentialsMatchDatabaseRecord(SendLoginModel LoginInformation, BoardWebAppContext dbContext)
         {
             List<string> ValidationErrorMessages = LoginInformation.ValidationErrorMessages;
             if (LoginFieldsNotNullStatic(LoginInformation.userLoginModel, ValidationErrorMessages))
@@ -72,7 +72,6 @@ namespace BoardWebApp.ViewModels
                 authenticationCookieHash = User.ComputeSha256HashForString(userForLoginEmail.Password + userForLoginEmail.EmailHash);
             }
             
-
             return authenticationCookieHash;
         }
     }

@@ -52,7 +52,7 @@ namespace BoardWebApp.Controllers
         public IActionResult Login(SendLoginModel LoginInformation)
         {
             string LoginSuccessful = "Login successful!";
-            if (UserLoginModel.LoginSuccess(LoginInformation, _dbContext))
+            if (UserLoginModel.LoginCredentialsMatchDatabaseRecord(LoginInformation, _dbContext))
             {
                 string AuthenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(LoginInformation.userLoginModel.Email, _dbContext);
                 Console.WriteLine("Login successful!");
