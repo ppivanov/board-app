@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using BoardWebApp.Models;
 using BoardWebApp.ViewModels;
-using RestSharp;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 

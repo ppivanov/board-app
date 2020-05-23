@@ -90,19 +90,23 @@ namespace BoardWebApp.ViewModels
             UserRegistrationModel newUserData = registrationInformation.userRegistrationModel;
             List<string> ValidationErrorMessages = registrationInformation.ValidationErrorMessages;
 
-            FieldsNotEmptyValidationsStatic(newUserData, ValidationErrorMessages);
-            EmailValidationsStatic(newUserData.Email, ValidationErrorMessages, dbContext);
-            PasswordValidatonsStatic(newUserData.Password, newUserData.ConfirmPassword, ValidationErrorMessages);
+            if(FieldsNotEmptyValidationsStatic(newUserData, ValidationErrorMessages) == true)
+            {
+                EmailValidationsStatic(newUserData.Email, ValidationErrorMessages, dbContext);
+                PasswordValidatonsStatic(newUserData.Password, newUserData.ConfirmPassword, ValidationErrorMessages);
+            }
         }
 
         /************ ------------ FIELDS NOT EMPTY VALIDATIONS ------------ ************/
-        public static void FieldsNotEmptyValidationsStatic(UserRegistrationModel newUserData, List<string> ValidationErrorMessages)
-        {   
-            if (String.IsNullOrEmpty(newUserData.Email)) { ValidationErrorMessages.Add("Email is required"); }
-            if (String.IsNullOrEmpty(newUserData.FirstName)) { ValidationErrorMessages.Add("First name is required"); }
-            if (String.IsNullOrEmpty(newUserData.LastName)) { ValidationErrorMessages.Add("Last name is required"); }
-            if (String.IsNullOrEmpty(newUserData.Password)) { ValidationErrorMessages.Add("Password is required"); }
-            if (String.IsNullOrEmpty(newUserData.ConfirmPassword)) { ValidationErrorMessages.Add("Please confirm your password"); }
+        public static bool FieldsNotEmptyValidationsStatic(UserRegistrationModel newUserData, List<string> ValidationErrorMessages)
+        {
+            bool fieldsNotEmpty = true;
+            if (String.IsNullOrEmpty(newUserData.Email)) { ValidationErrorMessages.Add("Email is required"); fieldsNotEmpty = false; }
+            if (String.IsNullOrEmpty(newUserData.FirstName)) { ValidationErrorMessages.Add("First name is required"); fieldsNotEmpty = false; }
+            if (String.IsNullOrEmpty(newUserData.LastName)) { ValidationErrorMessages.Add("Last name is required"); fieldsNotEmpty = false; }
+            if (String.IsNullOrEmpty(newUserData.Password)) { ValidationErrorMessages.Add("Password is required"); fieldsNotEmpty = false; }
+            if (String.IsNullOrEmpty(newUserData.ConfirmPassword)) { ValidationErrorMessages.Add("Please confirm your password"); fieldsNotEmpty = false; }
+            return fieldsNotEmpty;
         }
         /************ ------------ END OF FIELDS NOT EMPTY VALIDATIONS ------------ ************/
 
