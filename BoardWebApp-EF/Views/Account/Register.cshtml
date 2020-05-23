@@ -1,37 +1,51 @@
-﻿@model BoardWebApp.ViewModels.UserRegistrationModel
-
+﻿@model BoardWebApp.ViewModels.SendRegisterationModel
+@* SendRegisterationModel holds a UserRegistrationModel and a List of strings representing ValidationErrorMessages  *@
+@{
+    ViewData["Title"] = "Register";
+}
 <h1>Register</h1>
 
-<h4>UserRegistrationModel</h4>
+<h4>Registration form</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Register">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" placeholder="Johnny" class="form-control"/>
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+            @* This div displays all failed validations that are performed on UserRegistrationModel *@
+            <!-- <div asp-validation-summary="All" class="text-danger"></div> -->
+            <div>
+                @if (Model != null && Model.ValidationErrorMessages != null)
+                {
+                    @foreach (var ErrorMessage in Model.ValidationErrorMessages)
+                    {
+                        @ErrorMessage
+                        <br />
+                    }
+                }
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" placeholder="Bravo" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="userRegistrationModel.FirstName" class="control-label"></label>
+                <input asp-for="userRegistrationModel.FirstName" placeholder="Johnny" class="form-control" />
+                <span asp-validation-for="userRegistrationModel.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" placeholder="example@domain.org" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="userRegistrationModel.LastName" class="control-label"></label>
+                <input asp-for="userRegistrationModel.LastName" placeholder="Bravo" class="form-control" />
+                <span asp-validation-for="userRegistrationModel.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="userRegistrationModel.Email" class="control-label"></label>
+                <input asp-for="userRegistrationModel.Email" placeholder="example@domain.org" class="form-control" />
+                <span asp-validation-for="userRegistrationModel.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <label asp-for="userRegistrationModel.Password" class="control-label"></label>
+                <input asp-for="userRegistrationModel.Password" class="form-control" />
+                <span asp-validation-for="userRegistrationModel.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="userRegistrationModel.ConfirmPassword" class="control-label"></label>
+                <input asp-for="userRegistrationModel.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="userRegistrationModel.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -25,8 +25,8 @@ namespace BoardWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BoardWebAppContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
             services.AddMvc(options => options.EnableEndpointRouting=false);
+            services.AddDbContext<BoardWebAppContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +51,10 @@ namespace BoardWebApp
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "account",
+                    template: "{controller=Account}/{action=Login}"
+                    );
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

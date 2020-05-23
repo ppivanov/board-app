@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using BoardWebApp.Models;
 using BoardWebApp.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,6 +15,7 @@ namespace BoardWebApp.Controllers
         public AccountController(BoardWebAppContext dbContext)
         {
             _dbContext = dbContext;
+            //Console.WriteLine(_dbContext.User.Where(user => user.Email == "notaracist@murica.com").FirstOrDefault().Email);
         }
 
         // GET: /<controller>/
@@ -26,30 +26,38 @@ namespace BoardWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(UserRegistrationModel newUserValues)
+        public IActionResult Register(SendRegisterationModel registrationInformation)
         {
-            if (EmailBelongsToAnotherUser(newUserValues.Email))
-                Console.WriteLine("Email " + newUserValues.Email + " already in use");
-            else
-                Console.WriteLine("Email is all good!!");
-
-            //TODO
-            return View();
-        }
-
-        public bool EmailBelongsToAnotherUser(string value)
-        {
-            var EmailStore = _dbContext.User.Where(user => user.Email == value);
-            var userFromQuery = EmailStore.FirstOrDefault();
-            //If an email is already acossiated with another user 
-            if (userFromQuery != null)
+            UserRegistrationModel.UserRegistrationValidations(registrationInformation, _dbContext);
+            if (UserRegistrationModel.PassedAllRegistrationValidations(registrationInformation.ValidationErrorMessages))
             {
-                Console.WriteLine("userFromQuery's Email = " + userFromQuery.Email);
-                return true;
+                if (UserRegistrationModel.SaveUser(registrationInformation.userRegistrationModel, _dbContext))
+                {
+                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Account", "Login");
+                }
             }
-            // else the email is not related to any users and is free to use
-            else
-                return false;
+            //TODO
+            return View(registrationInformation);
         }
+
+        //public bool EmailBelongsToAnotherUser(string value)
+        //{
+        //    var EmailStore = _dbContext.User.Where(user => user.Email == value);
+        //    Console.WriteLine("AccountController dbContext # of results = " + EmailStore.ToArray().Length);
+        //    var userFromQuery = EmailStore.FirstOrDefault();
+        //    //If an email is already acossiated with another user 
+        //    if (userFromQuery != null)
+        //    {
+        //        Console.WriteLine("userFromQuery's Email = " + userFromQuery.Email);
+        //        return true;
+        //    }
+        //    // else the email is not related to any users and is free to use
+        //    else
+        //        return false;
+        //}
+        
     }
 }
+
+

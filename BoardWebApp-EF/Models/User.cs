@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BoardWebApp.Models
 {
@@ -31,5 +33,21 @@ namespace BoardWebApp.Models
         public virtual ICollection<Project> ProjectProjectOwner { get; set; }
         public virtual ICollection<Project> ProjectProjectScrumMaster { get; set; }
         public virtual ICollection<Ticket> Ticket { get; set; }
+
+
+        public static string ComputeSha256HashForString(string rawString)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawString));
+                StringBuilder hashedString = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    hashedString.Append(bytes[i].ToString("x2"));
+                }
+                return hashedString.ToString();
+            } 
+        }
+                
     }
 }
