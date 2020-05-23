@@ -28,12 +28,13 @@ namespace BoardWebApp.Controllers
         [HttpPost]
         public IActionResult Register(SendRegisterationModel registrationInformation)
         {
+            string registrationSuccessful = "Thank you for registering! You can now log into your new account.";
             UserRegistrationModel.UserRegistrationValidations(registrationInformation, _dbContext);
             if (UserRegistrationModel.PassedAllRegistrationValidations(registrationInformation.ValidationErrorMessages))
             {
                 if (UserRegistrationModel.SaveUser(registrationInformation.userRegistrationModel, _dbContext))
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { @message = registrationSuccessful });
                     //return RedirectToAction("Account", "Login");
                 }
             }

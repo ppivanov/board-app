@@ -19,10 +19,19 @@ namespace BoardWebApp.Controllers
             _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+#nullable enable
+        public IActionResult Index(string? message)
         {
-            return View();
+            if (message is null)
+            {
+                return View();
+            }
+            else
+            {
+                return View((object)message);
+            }
         }
+#nullable disable
 
         public IActionResult Privacy()
         {

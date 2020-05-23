@@ -1,7 +1,12 @@
-﻿@{
+﻿@model string
+@{
     ViewData["Title"] = "Home Page";
 }
 
+@if(Model != null)
+{
+    <div style="background-color: forestgreen; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@Model</div>
+}
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
