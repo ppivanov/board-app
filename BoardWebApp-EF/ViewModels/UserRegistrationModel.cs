@@ -85,7 +85,7 @@ namespace BoardWebApp.ViewModels
         // It is meant to be called from AccountController that will pass in the parameters:
         //  - registrationInformation     => Holds all the data from the page. Has a List<string> meant for validation error messages.
         //  - dbContext                   => Holds the BoardWebAppContext used to run queries against the database.
-        public static void UserRegistrationValidationsStatic(SendRegisterationModel registrationInformation, BoardWebAppContext dbContext)
+        public static void UserRegistrationValidationsStatic(SendRegistrationModel registrationInformation, BoardWebAppContext dbContext)
         {
             UserRegistrationModel newUserData = registrationInformation.userRegistrationModel;
             List<string> ValidationErrorMessages = registrationInformation.ValidationErrorMessages;

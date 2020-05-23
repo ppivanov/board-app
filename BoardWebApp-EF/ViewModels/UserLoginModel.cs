@@ -1,5 +1,4 @@
 ﻿using BoardWebApp.Models;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -75,15 +74,6 @@ namespace BoardWebApp.ViewModels
             
 
             return authenticationCookieHash;
-        }
-
-        public static HttpCookie SetCookie(string AuthenticationHashForCookie)
-        {
-            HttpCookie BoardAppSessionCookie = new HttpCookie();
-            BoardAppSessionCookie.Name = "BoardApp.SessionCookie";
-            BoardAppSessionCookie.Value = AuthenticationHashForCookie;
-            BoardAppSessionCookie.Expires = DateTime.Now.AddMinutes(60.0);
-            return BoardAppSessionCookie;
         }
     }
 }

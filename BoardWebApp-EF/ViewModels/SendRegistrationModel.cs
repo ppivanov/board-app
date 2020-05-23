@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BoardWebApp.ViewModels
 {
-    public class SendRegisterationModel
+    public class SendRegistrationModel
     {
         public UserRegistrationModel userRegistrationModel { get; set; }
         public List<string> ValidationErrorMessages { get; set; }
 
-        public SendRegisterationModel() {  }
+        public SendRegistrationModel() {  }
     }
 }
