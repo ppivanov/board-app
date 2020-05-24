@@ -57,7 +57,7 @@ namespace BoardWebApp
                     );
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{message?}");
+                    template: "{controller=Home}/{action=Index}");
             });
         }
     }
