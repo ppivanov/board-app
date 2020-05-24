@@ -44,7 +44,7 @@ namespace BoardWebApp.ViewModels
         [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "Please confirm your password")]
         [DataType(DataType.Password)]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
         public static bool SaveUser(UserRegistrationModel newUserData, BoardWebAppContext dbContext)
@@ -187,7 +187,7 @@ namespace BoardWebApp.ViewModels
 
             if (String.Equals(password, confirmPassword) == false)
             {
-                ValidationErrorMessages.Add("'Confirm password' and 'Password' do not match.");
+                ValidationErrorMessages.Add("Passwords do not match");
             }
         }
 
