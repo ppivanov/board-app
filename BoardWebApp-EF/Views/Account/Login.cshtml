@@ -2,6 +2,11 @@
 @* SendRegisterationModel holds a UserRegistrationModel and a List of strings representing ValidationErrorMessages  *@
 @{
     ViewData["Title"] = "Login";
+
+}
+@if (Model != null && Model.LogoutMessage != null)
+{
+    <div style="background-color: green; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@Model.LogoutMessage</div>
 }
 <h1>Log in</h1>
 
