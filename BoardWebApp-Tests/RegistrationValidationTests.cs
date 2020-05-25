@@ -108,6 +108,12 @@ namespace BoardWebApp_Tests
 
             if (expectedNumberOfErrors == 0)
             {
+                List<string> persistedEmails = new List<string>();
+                foreach (User u in _dbContext.User)
+                {
+                    persistedEmails.Add(u.Email);
+                }
+                Assert.Contains<string>(email, persistedEmails);
                 Assert.IsType<RedirectToActionResult>(result);
             }
             else

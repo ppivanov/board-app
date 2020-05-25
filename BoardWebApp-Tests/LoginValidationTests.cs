@@ -2,6 +2,7 @@
 using BoardWebApp.Models;
 using BoardWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -18,8 +19,8 @@ namespace BoardWebApp_Tests
         }
 
         [Theory]
-        [InlineData("trudy@board.com", "P@ssword1", true)] // All good  
-        [InlineData("", "P@ssword1", false)] // email empty 
+        //[InlineData("trudy@board.com", "P@ssword1", true)] // All good
+        [InlineData("", "P@ssword1", false)] // email empty
         [InlineData("trudy@board.com", "", false)] // password empty
         [InlineData("trudy@board.com", "P@ssword", false)] // Wrong password
         [InlineData("trudy@board.c", "P@ssword1", false)] // user doesn't exist
@@ -47,6 +48,7 @@ namespace BoardWebApp_Tests
             if (expectedResult == true)
             {
                 _output.WriteLine("Log in success");
+
                 Assert.IsType<RedirectToActionResult>(result);
             }
             else
