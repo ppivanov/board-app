@@ -1,5 +1,7 @@
+using BoardWebApp.Controllers;
 using BoardWebApp.Models;
 using BoardWebApp.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,50 +16,21 @@ namespace BoardWebApp_Tests
     public class RegistrationValidationsTests : IDisposable
     {
         private readonly ITestOutputHelper _output;
-        private readonly UserRegistrationModel _registrationModel;
+        //private readonly UserRegistrationModel _registrationModel;
         private BoardWebAppContext _dbContext;
         private List<string> _validations;
         public RegistrationValidationsTests(ITestOutputHelper testOutputHelper)
         {
-            _registrationModel = new UserRegistrationModel();
+            //_registrationModel = new UserRegistrationModel();
             _validations = new List<string>();
-            _output = testOutputHelper;   
+            _output = testOutputHelper;
         }
 
         public void Dispose()
         {
-            ClearRegistrationModel();
+            //ClearRegistrationModel();
             _validations.Clear();
             _dbContext = null;
-        }
-        public void ClearRegistrationModel()
-        {
-            _registrationModel.Email = "";
-            _registrationModel.FirstName = "";
-            _registrationModel.LastName = "";
-            _registrationModel.Password = "";
-            _registrationModel.ConfirmPassword = "";
-        }
-
-        [Theory]
-        [InlineData(null,"Antony","Hopkins", "TestPassword@1234", "TestPassword@1234", false)]
-        [InlineData("Antony.Hopkins@Mail.com","Antony","Hopkins", "TestPassword@1234", "", false)]
-        //ADD MORE CASES
-        public void FieldsAreEmptyValidation(string email, string firstName, string lastName, string password, string confirmPassword, bool expectedResult)
-        {
-            _validations.Clear();
-            _registrationModel.Email = email; 
-            _registrationModel.FirstName = firstName;
-            _registrationModel.LastName = lastName;
-            _registrationModel.Password = password;
-            _registrationModel.ConfirmPassword = confirmPassword;
-
-            bool actualResult = UserRegistrationModel.FieldsNotEmptyValidationsStatic(_registrationModel, _validations);
-            Assert.Equal(expectedResult, actualResult);
-            Assert.True(_validations.Count > 0);
-
-            ClearRegistrationModel();
-            _validations.Clear();
         }
 
         [Theory]
@@ -72,7 +45,8 @@ namespace BoardWebApp_Tests
             string actualValidationMessage = null;
 
             UserRegistrationModel.EmailValidationsStatic(email, _validations, _dbContext);
-            if(_validations != null && _validations.Count > 0) {
+            if (_validations != null && _validations.Count > 0)
+            {
                 //_output.WriteLine(@"example {0}", "output");
                 actualValidationMessage = _validations[0];
             }
@@ -81,37 +55,7 @@ namespace BoardWebApp_Tests
             _validations.Clear();
             _dbContext = null;
         }
-
-        [Theory]
-        [InlineData("Password1", "Password1", null)] //password matches complexity conditions and password == confirmPassword
-        //[InlineData("Password", "Password", //password does NOT match complexity conditions
-        //    "Password must be 8 to 32 characters long and must match at least 3 of the conditions:" +
-        //    "<br/>- has 1 lower case letter<br/>- has 1 upper case letter<br/>- has 1 numeric character<br/>- has 1 special character")] 
-        [InlineData("Password1", "Pass", "Passwords do not match")] //password matches complexity conditions and password == confirmPassword
-        public void PasswordValidations(string password, string confirmPassword, string expectedValidationMessage)
-        {
-            InitInMemoryDbContext();
-            _validations.Clear();
-
-            string actualValidationMessage = null;
-
-            UserRegistrationModel.PasswordValidatonsStatic(password, confirmPassword, _validations);
-            if (_validations != null)
-            {
-                _output.WriteLine("validations is not empty, size: " + _validations.Count);
-                if (_validations.Count > 0)
-                {
-                    _output.WriteLine("validations has at least 1 element");
-                    actualValidationMessage = _validations[0];
-                }
-            }
-            Assert.Equal(expectedValidationMessage, actualValidationMessage);
-
-            _validations.Clear();
-            _dbContext = null;
-        }
-        //PasswordValidatonsStatic
-
+        
         public void InitInMemoryDbContext()
         {
             Random rng = new Random();
@@ -137,6 +81,54 @@ namespace BoardWebApp_Tests
                     }
                 );
             _dbContext.SaveChanges();
+        }
+
+        [Theory]
+        [InlineData("al@walk.com", "Alan", "Alan", "P@ssword1", "P@ssword1", 0)] // All good
+        [InlineData("al@walk.com", "", "Alan", "P@ssword1", "P@ssword1", 1)] // First Name empty
+        [InlineData("al@walk.com", "Alan", "", "P@ssword1", "P@ssword1", 1)] // Last Name empty
+        [InlineData("al@walk.com", "Alan", "Alan", "", "P@ssword1", 1)] // Password empty
+        [InlineData("al@walk.com", "Alan", "Alan", "P@ssword1", "", 1)] // Confirm Password empty
+        [InlineData(null, "Antony", "Hopkins", "TestPassword@1234", "TestPassword@1234", 1)] // Email empty
+        [InlineData("notaracist@murica.com", "fname", "lname", "Password", "Pass", 3)] // email is taken && pass not complex && confirm pass doesn't match
+        public void PostRegisterDisplaysErrorMessage(string email, string fname, string lname, string password, string confirmPassword, int expectedNumberOfErrors)
+        {
+            InitInMemoryDbContext();
+            SendRegistrationModel registrationInfo = new SendRegistrationModel()
+            {
+                userRegistrationModel = new UserRegistrationModel()
+                {
+                    Email = email,
+                    FirstName = fname,
+                    LastName = lname,
+                    Password = password,
+                    ConfirmPassword = confirmPassword
+                },
+                ValidationErrorMessages = _validations
+            };
+
+            var result = new AccountController(_dbContext).Register(registrationInfo);
+
+            if (expectedNumberOfErrors == 0)
+            {
+                Assert.IsType<RedirectToActionResult>(result);
+            }
+            else
+            {
+                var requestResult = Assert.IsType<ViewResult>(result);
+                var resultModel = Assert.IsAssignableFrom<SendRegistrationModel>(requestResult.ViewData.Model);
+
+                //foreach(string s in resultModel.ValidationErrorMessages)
+                //{
+                //    _output.WriteLine("error: " + s + "\n");
+                //}
+
+                //Verify that the error message is populated on the view's Model
+                Assert.True(resultModel.ValidationErrorMessages.Count == expectedNumberOfErrors);
+
+                _validations.Clear();
+                _dbContext = null;
+            }
         }
     }
 }

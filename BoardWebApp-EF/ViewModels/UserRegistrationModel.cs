@@ -37,8 +37,8 @@ namespace BoardWebApp.ViewModels
         //has 1 special character
         //Acceptable password - P@ssword
         // Still not completely secure but it's going to waste a few minutes of someone's time
-        [RegularExpression(@"(^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$)?(^(?=.*\d)(?=.*[a-z])(?=.*[@#$%^&+=]).{8,32}$)?(^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,32}$)?(^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,32}$)?",
-            ErrorMessage = "Password must be 8 to 32 characters long and must match at least 3 of the conditions:<br/>- has 1 lower case letter<br/>- has 1 upper case letter<br/>- has 1 numeric character<br/>- has 1 special character")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+            ErrorMessage = "Password must be at least 8 characters long and must have at least:<br/>- 1 lower case letter<br/>- 1 upper case letter<br/>- 1 numeric character<br/>- 1 special character")]
         public string Password { get; set; }
 
         [Display(Name = "Confirm password")]
@@ -181,8 +181,8 @@ namespace BoardWebApp.ViewModels
         {
             if (PasswordMatchesAtLeastThreeComplexityConditionsStatic(password) == false)
             {
-                ValidationErrorMessages.Add("Password must be 8 to 32 characters long and must match at least 3 of the conditions:" +
-                    "<br/>- has 1 lower case letter<br/>- has 1 upper case letter<br/>- has 1 numeric character<br/>- has 1 special character");
+                ValidationErrorMessages.Add("Password must be at least 8 characters long and must have at least:<br/>" +
+                    "- 1 lower case letter<br/>- 1 upper case letter<br/>- 1 numeric character<br/>- 1 special character");
             }
 
             if (String.Equals(password, confirmPassword) == false)
@@ -194,9 +194,10 @@ namespace BoardWebApp.ViewModels
         public static bool PasswordMatchesAtLeastThreeComplexityConditionsStatic(string password) {
 
             if (Regex.IsMatch(password,
-                @"(^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$)?(^(?=.*\d)(?=.*[a-z])(?=.*[@#$%^&+=]).{8,32}$)?(^
-                (?=.*\d)(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,32}$)?(^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,32}$)?"))
-                    return true;
+                @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
+                        )
+                    
+                return true;
             else 
                 return false;
         }
