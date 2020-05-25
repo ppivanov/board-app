@@ -5,23 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace BoardWebApp_Tests
 {
 
-    public class RegistrationValidationsTests : IDisposable
+    public class RegistrationValidationTests : IDisposable
     {
-        private readonly ITestOutputHelper _output;
-        //private readonly UserRegistrationModel _registrationModel;
         private BoardWebAppContext _dbContext;
         private List<string> _validations;
-        public RegistrationValidationsTests(ITestOutputHelper testOutputHelper)
+        private readonly ITestOutputHelper _output;
+        public RegistrationValidationTests(ITestOutputHelper testOutputHelper)
         {
-            //_registrationModel = new UserRegistrationModel();
             _validations = new List<string>();
             _output = testOutputHelper;
         }
@@ -39,7 +35,7 @@ namespace BoardWebApp_Tests
         [InlineData("aaaaaaaa", "Please enter a valid email address!")]
         public void EmailValidations(string email, string expectedValidationMessage)
         {
-            InitInMemoryDbContext();
+            _dbContext = InitInMemoryDbContext();
             _validations.Clear();
 
             string actualValidationMessage = null;
@@ -56,31 +52,32 @@ namespace BoardWebApp_Tests
             _dbContext = null;
         }
         
-        public void InitInMemoryDbContext()
+        public static BoardWebAppContext InitInMemoryDbContext()
         {
             Random rng = new Random();
 
             var optionsBuilder = new DbContextOptionsBuilder<BoardWebAppContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            _dbContext = new BoardWebAppContext(optionsBuilder.Options);
-            _dbContext.User.AddRange(
+            BoardWebAppContext dbContext = new BoardWebAppContext(optionsBuilder.Options);
+            dbContext.User.AddRange(
                     new User
                     {
                         Email = "notaracist@murica.com",
                         FirstName = "Zack",
                         LastName = "Yu",
-                        Password = "19513fdc9da4fb72a4a05eb66917548d3c90ff94d5419e1f2363eea89dfee1dd",
+                        Password = "00fcdde26dd77af7858a52e3913e6f3330a32b3121a61bce915cc6145fc44453",
                         //EmailHash = "e8107daab70f9bec25d249541eb247f36514248a14597b3cdc5ebaa3bb140a68"
                     }, new User
                     {
                         Email = "trudy@board.com",
                         FirstName = "Trudy",
                         LastName = "Turner",
-                        Password = "19513fdc9da4fb72a4a05eb66917548d3c90ff94d5419e1f2363eea89dfee1dd",
+                        Password = "00fcdde26dd77af7858a52e3913e6f3330a32b3121a61bce915cc6145fc44453",
                         //EmailHash = "08176ba0671827d033a25cfa6608d92caca8008527af3ff32dc23012dc99d554"
                     }
                 );
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
+            return dbContext;
         }
 
         [Theory]
@@ -93,7 +90,7 @@ namespace BoardWebApp_Tests
         [InlineData("notaracist@murica.com", "fname", "lname", "Password", "Pass", 3)] // email is taken && pass not complex && confirm pass doesn't match
         public void PostRegisterDisplaysErrorMessage(string email, string fname, string lname, string password, string confirmPassword, int expectedNumberOfErrors)
         {
-            InitInMemoryDbContext();
+            _dbContext = InitInMemoryDbContext();
             SendRegistrationModel registrationInfo = new SendRegistrationModel()
             {
                 userRegistrationModel = new UserRegistrationModel()
