@@ -43,6 +43,19 @@ namespace BoardWebApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult LogoutSuccess(SendLoginModel msgObj)
+        {
+            if (msgObj != null)
+            {
+                return View("Login", msgObj);
+            }
+            else
+            {
+                return View("Login");
+            }
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -73,13 +86,14 @@ namespace BoardWebApp.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            string LogoutSuccessFul = "Logout successful!";
             if (Request.Cookies["BoardAppSessionCookie"] != null)
             {
                 Response.Cookies.Delete("BoardAppSessionCookie");
             }
-
-            return RedirectToAction("Login", "Account", new { @message = LogoutSuccessFul });
+            string LogoutSuccessful = "Logout successful!";
+            SendLoginModel msgObj = new SendLoginModel();
+            msgObj.LogoutMessage = LogoutSuccessful;
+            return RedirectToAction("LogoutSuccess", "Account", msgObj);
         }
 
     }
