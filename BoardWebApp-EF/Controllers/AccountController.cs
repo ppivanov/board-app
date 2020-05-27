@@ -70,8 +70,10 @@ namespace BoardWebApp.Controllers
                 string AuthenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(LoginInformation.userLoginModel.Email, _dbContext);
                 Console.WriteLine("Login successful!");
         /****** COOKIE SETUP *******/
-                CookieOptions cookieOptions = new CookieOptions();
-                cookieOptions.MaxAge = new TimeSpan(1, 30, 0); // hours, minutes, seconds
+                CookieOptions cookieOptions = new CookieOptions()
+                {
+                    MaxAge = new TimeSpan(1, 30, 0) // hours, minutes, seconds
+                };
                 Response.Cookies.Append("BoardAppSessionCookie", AuthenticationHashForCookie, cookieOptions);
         /****** COOKIE SETUP *******/
                 return RedirectToAction("Index", "Home", new { @message = LoginSuccessful });

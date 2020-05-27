@@ -42,25 +42,21 @@ namespace BoardWebApp.ViewModels
 
         public static bool ArePlainEmailAndPasswordHashMatchingLoginInformationStatic(UserLoginModel LoginInformation, List<string> ValidationErrorMessages, BoardWebAppContext dbContext)
         {
-            try
+            User userFromQuery = dbContext.User.Where(user => user.Email == LoginInformation.Email).FirstOrDefault();
+            if(userFromQuery != null)
             {
-                User userFromQuery = dbContext.User.Where(user => user.Email == LoginInformation.Email).FirstOrDefault();
                 string passwordHashForLoginEmail = userFromQuery.Password;
                 if (String.IsNullOrEmpty(passwordHashForLoginEmail) == false)
                 {
                     string LoginPasswordHash = User.ComputeSha256HashForString(LoginInformation.Password);
-                    if(String.Equals(passwordHashForLoginEmail, LoginPasswordHash) == true)
+                    if (String.Equals(passwordHashForLoginEmail, LoginPasswordHash) == true)
                     {
                         return true;
                     }
                 }
-                
-                return false;
             }
-            catch
-            {
-                return false;
-            }
+            ValidationErrorMessages.Add("Invalid credentials - log in failed!");
+            return false;
         }
 
         public static string CalculateHashForCookieForUserEmailAndDBContext(string LoginEmail, BoardWebAppContext dbContext)
