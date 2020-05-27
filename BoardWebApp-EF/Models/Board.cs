@@ -14,11 +14,9 @@ namespace BoardWebApp.Models
         public int BoardId { get; set; }
         public string BoardName { get; set; }
         public string BoardDescription { get; set; }
-        public int BoardOwnerId { get; set; }
         public int? BoardTypeId { get; set; }
         public int? ProjectId { get; set; }
 
-        public virtual User BoardOwner { get; set; }
         public virtual BoardType BoardType { get; set; }
         public virtual Project Project { get; set; }
         public virtual ICollection<BoardColumn> BoardColumn { get; set; }

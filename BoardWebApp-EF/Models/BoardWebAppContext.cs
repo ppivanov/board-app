@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BoardWebApp.Models
 {
@@ -24,13 +26,14 @@ namespace BoardWebApp.Models
         public virtual DbSet<Ticket> Ticket { get; set; }
         public virtual DbSet<TicketType> TicketType { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserMemberType> UserMemberType { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BoardWebApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
         }
 
@@ -50,33 +53,25 @@ namespace BoardWebApp.Models
                     .HasColumnName("board_name")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.BoardOwnerId).HasColumnName("board_owner_id");
-
                 entity.Property(e => e.BoardTypeId).HasColumnName("board_type_id");
 
                 entity.Property(e => e.ProjectId).HasColumnName("project_id");
 
-                entity.HasOne(d => d.BoardOwner)
-                    .WithMany(p => p.Board)
-                    .HasForeignKey(d => d.BoardOwnerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Board__board_own__3B60C8C7");
-
                 entity.HasOne(d => d.BoardType)
                     .WithMany(p => p.Board)
                     .HasForeignKey(d => d.BoardTypeId)
-                    .HasConstraintName("FK__Board__board_typ__3C54ED00");
+                    .HasConstraintName("FK__Board__board_typ__61DB776A");
 
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.Board)
                     .HasForeignKey(d => d.ProjectId)
-                    .HasConstraintName("FK__Board__project_i__3D491139");
+                    .HasConstraintName("FK__Board__project_i__62CF9BA3");
             });
 
             modelBuilder.Entity<BoardColumn>(entity =>
             {
                 entity.HasKey(e => e.ColumnId)
-                    .HasName("PK__Board_Co__E301851FB3A4F08C");
+                    .HasName("PK__Board_Co__E301851F6A81FB3F");
 
                 entity.ToTable("Board_Column");
 
@@ -99,13 +94,13 @@ namespace BoardWebApp.Models
                     .WithMany(p => p.BoardColumn)
                     .HasForeignKey(d => d.BoardId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Board_Col__board__45DE573A");
+                    .HasConstraintName("FK__Board_Col__board__697C9932");
             });
 
             modelBuilder.Entity<BoardMember>(entity =>
             {
                 entity.HasKey(e => new { e.BoardId, e.MemberId })
-                    .HasName("PK__Board_Me__A0352EBA7CBF56CB");
+                    .HasName("PK__Board_Me__A0352EBAFC94EC3F");
 
                 entity.ToTable("Board_Member");
 
@@ -113,17 +108,19 @@ namespace BoardWebApp.Models
 
                 entity.Property(e => e.MemberId).HasColumnName("member_id");
 
+                entity.Property(e => e.MemberTypeId).HasColumnName("member_type_id");
+
                 entity.HasOne(d => d.Board)
                     .WithMany(p => p.BoardMember)
                     .HasForeignKey(d => d.BoardId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Board_Mem__board__4119A21D");
+                    .HasConstraintName("FK__Board_Mem__board__65AC084E");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.BoardMember)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Board_Mem__membe__40257DE4");
+                    .HasConstraintName("FK__Board_Mem__membe__66A02C87");
             });
 
             modelBuilder.Entity<BoardType>(entity =>
@@ -155,13 +152,13 @@ namespace BoardWebApp.Models
                     .WithMany(p => p.NotificationForUser)
                     .HasForeignKey(d => d.ForUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Notificat__for_u__3E3D3572");
+                    .HasConstraintName("FK__Notificat__for_u__63C3BFDC");
 
                 entity.HasOne(d => d.FromUser)
                     .WithMany(p => p.NotificationFromUser)
                     .HasForeignKey(d => d.FromUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Notificat__from___3F3159AB");
+                    .HasConstraintName("FK__Notificat__from___64B7E415");
             });
 
             modelBuilder.Entity<Project>(entity =>
@@ -177,27 +174,12 @@ namespace BoardWebApp.Models
                     .IsRequired()
                     .HasColumnName("project_name")
                     .HasMaxLength(255);
-
-                entity.Property(e => e.ProjectOwnerId).HasColumnName("project_owner_id");
-
-                entity.Property(e => e.ProjectScrumMasterId).HasColumnName("project_scrum_master_id");
-
-                entity.HasOne(d => d.ProjectOwner)
-                    .WithMany(p => p.ProjectProjectOwner)
-                    .HasForeignKey(d => d.ProjectOwnerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Project__project__420DC656");
-
-                entity.HasOne(d => d.ProjectScrumMaster)
-                    .WithMany(p => p.ProjectProjectScrumMaster)
-                    .HasForeignKey(d => d.ProjectScrumMasterId)
-                    .HasConstraintName("FK__Project__project__4301EA8F");
             });
 
             modelBuilder.Entity<ProjectMember>(entity =>
             {
                 entity.HasKey(e => new { e.ProjectId, e.MemberId })
-                    .HasName("PK__Project___E750264CE76C276B");
+                    .HasName("PK__Project___E750264C926D7A51");
 
                 entity.ToTable("Project_Member");
 
@@ -205,17 +187,19 @@ namespace BoardWebApp.Models
 
                 entity.Property(e => e.MemberId).HasColumnName("member_id");
 
+                entity.Property(e => e.MemberTypeId).HasColumnName("member_type_id");
+
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.ProjectMember)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Project_M__membe__44EA3301");
+                    .HasConstraintName("FK__Project_M__membe__688874F9");
 
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.ProjectMember)
                     .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Project_M__proje__43F60EC8");
+                    .HasConstraintName("FK__Project_M__proje__679450C0");
             });
 
             modelBuilder.Entity<Subtask>(entity =>
@@ -237,7 +221,7 @@ namespace BoardWebApp.Models
                     .WithMany(p => p.Subtask)
                     .HasForeignKey(d => d.TicketId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Subtask__ticket___49AEE81E");
+                    .HasConstraintName("FK__Subtask__ticket___6D4D2A16");
             });
 
             modelBuilder.Entity<Ticket>(entity =>
@@ -265,19 +249,19 @@ namespace BoardWebApp.Models
                 entity.HasOne(d => d.Assignee)
                     .WithMany(p => p.Ticket)
                     .HasForeignKey(d => d.AssigneeId)
-                    .HasConstraintName("FK__Ticket__assignee__48BAC3E5");
+                    .HasConstraintName("FK__Ticket__assignee__6C5905DD");
 
                 entity.HasOne(d => d.Column)
                     .WithMany(p => p.Ticket)
                     .HasForeignKey(d => d.ColumnId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Ticket__column_i__46D27B73");
+                    .HasConstraintName("FK__Ticket__column_i__6A70BD6B");
 
                 entity.HasOne(d => d.TicketType)
                     .WithMany(p => p.Ticket)
                     .HasForeignKey(d => d.TicketTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Ticket__ticket_t__47C69FAC");
+                    .HasConstraintName("FK__Ticket__ticket_t__6B64E1A4");
             });
 
             modelBuilder.Entity<TicketType>(entity =>
@@ -301,6 +285,11 @@ namespace BoardWebApp.Models
                     .HasColumnName("email")
                     .HasMaxLength(255);
 
+                entity.Property(e => e.EmailHash)
+                    .IsRequired()
+                    .HasColumnName("email_hash")
+                    .HasMaxLength(499);
+
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasColumnName("first_name")
@@ -315,11 +304,21 @@ namespace BoardWebApp.Models
                     .IsRequired()
                     .HasColumnName("password")
                     .HasMaxLength(499);
-                
-                entity.Property(e => e.EmailHash)
+            });
+
+            modelBuilder.Entity<UserMemberType>(entity =>
+            {
+                entity.HasKey(e => e.MemberTypeId)
+                    .HasName("PK__User_Mem__510D41A64C3692DA");
+
+                entity.ToTable("User_Member_Type");
+
+                entity.Property(e => e.MemberTypeId).HasColumnName("member_type_id");
+
+                entity.Property(e => e.MemberType)
                     .IsRequired()
-                    .HasColumnName("email_hash")
-                    .HasMaxLength(499);
+                    .HasColumnName("member_type")
+                    .HasMaxLength(255);
             });
 
             OnModelCreatingPartial(modelBuilder);
