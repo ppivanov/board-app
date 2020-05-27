@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -35,6 +36,20 @@ namespace BoardWebApp.Models
         public virtual ICollection<Project> ProjectProjectScrumMaster { get; set; }
         public virtual ICollection<Ticket> Ticket { get; set; }
 
+
+        public static User GetUserIfComputedHashEqualsAuthenticationHash(string authenticationHash, BoardWebAppContext dbContext)
+        {
+            List<User> allUsers = dbContext.User.ToList<User>();
+            foreach(User user in allUsers)
+            {
+                string computedHashForUser = ComputeSha256HashForString(user.EmailHash + user.Password);
+                if(authenticationHash == computedHashForUser)
+                {
+                    return user;
+                }
+            }
+            return null;
+        }
 
         public static string ComputeSha256HashForString(string rawString)
         {

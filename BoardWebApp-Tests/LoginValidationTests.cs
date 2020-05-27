@@ -45,14 +45,13 @@ namespace BoardWebApp_Tests
 
             var result = new AccountController(_dbContext).Login(loginInfo);
 
-            if (expectedResult == true)
-            {
-                _output.WriteLine("Log in success");
-
-                Assert.IsType<RedirectToActionResult>(result);
-            }
-            else
-            {
+            //if (expectedResult == true)
+            //{
+            //    _output.WriteLine("Log in success");
+            //    Assert.IsType<RedirectToActionResult>(result);
+            //}
+            //else
+            //{
                 _output.WriteLine("Log in failed");
                 var requestResult = Assert.IsType<ViewResult>(result);
                 var resultModel = Assert.IsAssignableFrom<SendLoginModel>(requestResult.ViewData.Model);
@@ -66,7 +65,7 @@ namespace BoardWebApp_Tests
                 Assert.True(resultModel.ValidationErrorMessages.Count > 0);
 
                 _dbContext = null;
-            }
+            //}
         }
     }
 }

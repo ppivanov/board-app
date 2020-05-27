@@ -67,7 +67,8 @@ namespace BoardWebApp.Controllers
             string LoginSuccessful = "Login successful!";
             if (UserLoginModel.LoginCredentialsMatchDatabaseRecord(LoginInformation, _dbContext))
             {
-                string AuthenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(LoginInformation.userLoginModel.Email, _dbContext);
+                string stringForAuthenticationHash = LoginInformation.userLoginModel.Email + Models.User.ComputeSha256HashForString(LoginInformation.userLoginModel.Password);
+                string AuthenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(stringForAuthenticationHash, _dbContext);
                 Console.WriteLine("Login successful!");
         /****** COOKIE SETUP *******/
                 CookieOptions cookieOptions = new CookieOptions()
