@@ -33,7 +33,6 @@ namespace BoardWebApp_Tests
         public void AuthenticationTest(string mockAuthHash, bool expectedResult)
         {
             _dbContext = RegistrationValidationTests.InitInMemoryDbContext();
-            List<string> messages = new List<string>();
             User authenticatedUser = User.AuthenticateBasedOnCookieValue(mockAuthHash, _dbContext);
             bool actualResult = (authenticatedUser != null); // true if a user is found
 
@@ -41,17 +40,5 @@ namespace BoardWebApp_Tests
 
             _dbContext = null;
         }
-
-        //[Theory]
-        //[InlineData("Zack","e8107daab70f9bec25d249541eb247f36514248a14597b3cdc5ebaa3bb140a68","00fcdde26dd77af7858a52e3913e6f3330a32b3121a61bce915cc6145fc44453")]
-        //[InlineData("Trudy", "08176ba0671827d033a25cfa6608d92caca8008527af3ff32dc23012dc99d554", "00fcdde26dd77af7858a52e3913e6f3330a32b3121a61bce915cc6145fc44453")]
-        //public void Test(string personName, string eHash, string pHash)
-        //{
-        //    string authHash = User.ComputeSha256HashForString(eHash + pHash);
-
-        //    _output.WriteLine(personName + " - " + authHash);
-        //}
-
-
     }
 }

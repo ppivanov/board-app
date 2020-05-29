@@ -10,6 +10,7 @@ namespace BoardWebApp.Controllers
 {
     public class AccountController : Controller
     {
+        public static string CookieId = "BoardAppSessionCookie";
         private BoardWebAppContext _dbContext;
         public AccountController(BoardWebAppContext dbContext)
         {
@@ -64,18 +65,17 @@ namespace BoardWebApp.Controllers
             string LoginSuccessful = "Login successful!";
             if (UserLoginModel.LoginCredentialsMatchDatabaseRecord(LoginInformation, _dbContext))
             {
-                string formPassword = LoginInformation.userLoginModel.Password;
+                // string formPassword = LoginInformation.userLoginModel.Password;
                 string formEmail = LoginInformation.userLoginModel.Email;
 
-                string stringForAuthenticationHash = formEmail + Models.User.ComputeSha256HashForString(formPassword);
-                string authenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(stringForAuthenticationHash, _dbContext);
+                string cookieValue = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(formEmail, _dbContext);
                 Console.WriteLine("Login successful!");
         /****** COOKIE SETUP *******/
                 CookieOptions cookieOptions = new CookieOptions()
                 {
                     MaxAge = new TimeSpan(1, 30, 0) // hours, minutes, seconds
                 };
-                Response.Cookies.Append("BoardAppSessionCookie", authenticationHashForCookie, cookieOptions);
+                Response.Cookies.Append(CookieId, cookieValue, cookieOptions);
         /****** COOKIE SETUP *******/
                 return RedirectToAction("Index", "Home", new { @message = LoginSuccessful });
             }

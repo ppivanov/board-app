@@ -20,15 +20,24 @@ namespace BoardWebApp.Controllers
         }
 
 #nullable enable
-        public IActionResult Index(string? message)
+        public IActionResult Index(string? errorMessage)
         {
-            if (message is null)
+            if (errorMessage is null)
             {
-                return View();
+                string cookieValue = Request.Cookies[AccountController.CookieId];
+                User authenticatedUser = Models.User.AuthenticateBasedOnCookieValue(cookieValue, _dbContext);
+                if(authenticatedUser == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View("BoardWebApp");
+                }
             }
             else
             {
-                return View((object)message);
+                return View((object)errorMessage);
             }
         }
 #nullable disable
