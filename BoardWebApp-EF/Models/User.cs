@@ -37,15 +37,20 @@ namespace BoardWebApp.Models
         public virtual ICollection<Ticket> Ticket { get; set; }
 
 
-        public static User GetUserIfComputedHashEqualsAuthenticationHash(string authenticationHash, BoardWebAppContext dbContext)
+        public static User AuthenticateBasedOnCookieValue(string cookieValue, BoardWebAppContext dbContext)
         {
-            List<User> allUsers = dbContext.User.ToList<User>();
-            foreach(User user in allUsers)
+            string emailHash = cookieValue.Substring(0, 64); // first 64 characters of the cookie's value
+            string authenticationHash = cookieValue.Substring(64); // every character after 64th.
+            User userFromQuery = dbContext.User.Where(user => user.EmailHash == emailHash).FirstOrDefault(); // query the DB and retrieve the user if found.
+            
+            if(userFromQuery != null)
             {
-                string computedHashForUser = ComputeSha256HashForString(user.EmailHash + user.Password);
+                // Compute the hash for the User DB record that was found.
+                string computedHashForUser = ComputeSha256HashForString(userFromQuery.EmailHash + userFromQuery.Password);
+                // compare computed against incoming hash. If there's a match - return the user.
                 if(authenticationHash == computedHashForUser)
                 {
-                    return user;
+                    return userFromQuery;
                 }
             }
             return null;

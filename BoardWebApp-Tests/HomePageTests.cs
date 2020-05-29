@@ -27,14 +27,14 @@ namespace BoardWebApp_Tests
         }
 
         [Theory]
-        [InlineData("c472a2c6627ceb7c0f1b1f1c5e8ed5a903fcede83b4b9da720697c3dc127ffff", true)] // Zack (notaracist@murica.com)
-        [InlineData("217161eda88a0d393461c215f94cdbfb787e82ed7c8e5db2a2bfcbea69c7a0d4", true)] // Trudy (trudy@board.com)
-        [InlineData("k7d107ebd30c26531e71747343btd42d5f64f6b423a4f9775490s281fceaadfb", false)] // not in db
+        [InlineData("e8107daab70f9bec25d249541eb247f36514248a14597b3cdc5ebaa3bb140a68c472a2c6627ceb7c0f1b1f1c5e8ed5a903fcede83b4b9da720697c3dc127ffff", true)] // Zack (notaracist@murica.com)
+        [InlineData("08176ba0671827d033a25cfa6608d92caca8008527af3ff32dc23012dc99d554217161eda88a0d393461c215f94cdbfb787e82ed7c8e5db2a2bfcbea69c7a0d4", true)] // Trudy (trudy@board.com)
+        [InlineData("247f36514248a14597b3cdc5ebaa3bb140a68c472a2c6627ceb7c0f1b1f1c5ehk7d107ebd30c26531e71747343btd42d5f64f6b423a4f9775490s281fceaadfb", false)] // not in db
         public void AuthenticationTest(string mockAuthHash, bool expectedResult)
         {
             _dbContext = RegistrationValidationTests.InitInMemoryDbContext();
             List<string> messages = new List<string>();
-            User authenticatedUser = User.GetUserIfComputedHashEqualsAuthenticationHash(mockAuthHash, _dbContext);
+            User authenticatedUser = User.AuthenticateBasedOnCookieValue(mockAuthHash, _dbContext);
             bool actualResult = (authenticatedUser != null); // true if a user is found
 
             Assert.Equal(expectedResult, actualResult);
