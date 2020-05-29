@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using BoardWebApp.Models;
 using BoardWebApp.ViewModels;
 using Microsoft.AspNetCore.Http;
-using System.Net;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -67,15 +64,18 @@ namespace BoardWebApp.Controllers
             string LoginSuccessful = "Login successful!";
             if (UserLoginModel.LoginCredentialsMatchDatabaseRecord(LoginInformation, _dbContext))
             {
-                string stringForAuthenticationHash = LoginInformation.userLoginModel.Email + Models.User.ComputeSha256HashForString(LoginInformation.userLoginModel.Password);
-                string AuthenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(stringForAuthenticationHash, _dbContext);
+                string formPassword = LoginInformation.userLoginModel.Password;
+                string formEmail = LoginInformation.userLoginModel.Email;
+
+                string stringForAuthenticationHash = formEmail + Models.User.ComputeSha256HashForString(formPassword);
+                string authenticationHashForCookie = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(stringForAuthenticationHash, _dbContext);
                 Console.WriteLine("Login successful!");
         /****** COOKIE SETUP *******/
                 CookieOptions cookieOptions = new CookieOptions()
                 {
                     MaxAge = new TimeSpan(1, 30, 0) // hours, minutes, seconds
                 };
-                Response.Cookies.Append("BoardAppSessionCookie", AuthenticationHashForCookie, cookieOptions);
+                Response.Cookies.Append("BoardAppSessionCookie", authenticationHashForCookie, cookieOptions);
         /****** COOKIE SETUP *******/
                 return RedirectToAction("Index", "Home", new { @message = LoginSuccessful });
             }

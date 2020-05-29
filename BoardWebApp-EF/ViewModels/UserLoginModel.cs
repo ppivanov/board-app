@@ -62,10 +62,13 @@ namespace BoardWebApp.ViewModels
         public static string CalculateHashForCookieForUserEmailAndDBContext(string LoginEmail, BoardWebAppContext dbContext)
         {
             string authenticationCookieHash = "";
-            User userForLoginEmail = dbContext.User.Where(user => user.Email == LoginEmail).FirstOrDefault();
+            User userForLoginEmail = dbContext.User.Where(user => user.Email == LoginEmail).FirstOrDefault(); // get the user that has the same email as the paramater
             if(userForLoginEmail != null)
             {
-                authenticationCookieHash = User.ComputeSha256HashForString(userForLoginEmail.Password + userForLoginEmail.EmailHash);
+                // This statement will produce a string that's 128 chars long.
+                // First 64 chars will be the EmailHash that's unique for a user - this EmailHash will serve a identifier, to find the user that needs to be authenticated.
+                // Last 64 chars will be a hash that will serve as the authentication for all actions that require a certain degree of access priviliges.
+                authenticationCookieHash = userForLoginEmail.EmailHash + User.ComputeSha256HashForString(userForLoginEmail.Password + userForLoginEmail.EmailHash);
             }
             
             return authenticationCookieHash;
