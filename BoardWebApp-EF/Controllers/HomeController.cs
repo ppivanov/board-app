@@ -32,7 +32,7 @@ namespace BoardWebApp.Controllers
                 }
                 else
                 {
-                    return View("BoardWebApp");
+                    return View((object)"BoardWebApp");
                 }
             }
             else
