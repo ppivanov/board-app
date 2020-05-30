@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoardWebApp.Models;
+using BoardWebApp.ViewModels;
 
 namespace BoardWebApp.Controllers
 {
@@ -28,11 +30,12 @@ namespace BoardWebApp.Controllers
                 User authenticatedUser = Models.User.AuthenticateBasedOnCookieValue(cookieValue, _dbContext);
                 if(authenticatedUser == null)
                 {
-                    return View();
+                    string errorMessageForLoginPage = "You must login before you can access the app!";
+                    return RedirectToAction("Login", "Account", new { @errorMessage = errorMessageForLoginPage });
                 }
                 else
                 {
-                    return View((object)"BoardWebApp");
+                    return View();
                 }
             }
             else

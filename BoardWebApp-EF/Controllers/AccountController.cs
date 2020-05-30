@@ -54,9 +54,11 @@ namespace BoardWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string errorMessage)
         {
-            return View();
+            SendLoginModel errorMessageModel = new SendLoginModel();
+            errorMessageModel.ValidationErrorMessages.Add(errorMessage);
+            return View(errorMessageModel);
         }
 
         [HttpPost]
