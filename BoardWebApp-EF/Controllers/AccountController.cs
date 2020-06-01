@@ -33,7 +33,8 @@ namespace BoardWebApp.Controllers
             {
                 if (UserRegistrationModel.SaveUser(registrationInformation.userRegistrationModel, _dbContext))
                 {
-                    return RedirectToAction("Index", "Home", new { @message = registrationSuccessful });
+                    HomePageModel homePageData = new HomePageModel(registrationSuccessful);
+                    return RedirectToAction("Index", "Home", homePageData);
                     //return RedirectToAction("Account", "Login");
                 }
             }
@@ -79,7 +80,8 @@ namespace BoardWebApp.Controllers
                 };
                 Response.Cookies.Append(CookieId, cookieValue, cookieOptions);
         /****** COOKIE SETUP *******/
-                return RedirectToAction("Index", "Home", new { @message = LoginSuccessful });
+                HomePageModel homePageData = new HomePageModel(LoginSuccessful);
+                return RedirectToAction("Index", "Home", homePageData);
             }
             else
             {

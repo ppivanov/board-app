@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoardWebApp.Models
 {
@@ -15,7 +16,9 @@ namespace BoardWebApp.Models
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
 
+        [InverseProperty("Project")]
         public virtual ICollection<Board> Board { get; set; }
+        [InverseProperty("Project")]
         public virtual ICollection<ProjectMember> ProjectMember { get; set; }
     }
 }
