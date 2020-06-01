@@ -7,8 +7,9 @@ namespace BoardWebApp.Models
     {
         public int BoardId { get; set; }
         public int MemberId { get; set; }
+        public int MemberTypeId { get; set; }
 
         public virtual Board Board { get; set; }
-        public virtual User Member { get; set; }
+        public virtual UserMemberType Member { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -35,6 +36,27 @@ namespace BoardWebApp.Models
         public virtual ICollection<Project> ProjectProjectScrumMaster { get; set; }
         public virtual ICollection<Ticket> Ticket { get; set; }
 
+
+        public static User AuthenticateBasedOnCookieValue(string cookieValue, BoardWebAppContext dbContext)
+        {
+            if(cookieValue != null){
+                string emailHash = cookieValue.Substring(0, 64); // first 64 characters of the cookie's value
+                string authenticationHash = cookieValue.Substring(64); // every character after 64th.
+                User userFromQuery = dbContext.User.Where(user => user.EmailHash == emailHash).FirstOrDefault(); // query the DB and retrieve the user if found.
+                
+                if(userFromQuery != null)
+                {
+                    // Compute the hash for the User DB record that was found.
+                    string computedHashForUser = ComputeSha256HashForString(userFromQuery.EmailHash + userFromQuery.Password);
+                    // compare computed against incoming hash. If there's a match - return the user.
+                    if(authenticationHash == computedHashForUser)
+                    {
+                        return userFromQuery;
+                    }
+                }
+            }
+            return null;
+        }
 
         public static string ComputeSha256HashForString(string rawString)
         {

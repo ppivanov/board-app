@@ -66,14 +66,14 @@ namespace BoardWebApp_Tests
                         FirstName = "Zack",
                         LastName = "Yu",
                         Password = "00fcdde26dd77af7858a52e3913e6f3330a32b3121a61bce915cc6145fc44453",
-                        //EmailHash = "e8107daab70f9bec25d249541eb247f36514248a14597b3cdc5ebaa3bb140a68"
+                        EmailHash = "e8107daab70f9bec25d249541eb247f36514248a14597b3cdc5ebaa3bb140a68"
                     }, new User
                     {
                         Email = "trudy@board.com",
                         FirstName = "Trudy",
                         LastName = "Turner",
                         Password = "00fcdde26dd77af7858a52e3913e6f3330a32b3121a61bce915cc6145fc44453",
-                        //EmailHash = "08176ba0671827d033a25cfa6608d92caca8008527af3ff32dc23012dc99d554"
+                        EmailHash = "08176ba0671827d033a25cfa6608d92caca8008527af3ff32dc23012dc99d554"
                     }
                 );
             dbContext.SaveChanges();

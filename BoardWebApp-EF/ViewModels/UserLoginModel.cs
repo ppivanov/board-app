@@ -59,16 +59,22 @@ namespace BoardWebApp.ViewModels
             return false;
         }
 
-        public static string CalculateHashForCookieForUserEmailAndDBContext(string LoginEmail, BoardWebAppContext dbContext)
+        public static string CalculateHashForCookieForUserEmailAndDBContext(string userEmail, BoardWebAppContext dbContext)
         {
-            string authenticationCookieHash = "";
-            User userForLoginEmail = dbContext.User.Where(user => user.Email == LoginEmail).FirstOrDefault();
-            if(userForLoginEmail != null)
+            string cookieValue = "";
+
+            User userForEmailParameter = dbContext.User.Where(user => user.Email == userEmail).FirstOrDefault(); // password hash related to the incoming email 
+            if(userForEmailParameter != null)
             {
-                authenticationCookieHash = User.ComputeSha256HashForString(userForLoginEmail.Password + userForLoginEmail.EmailHash);
+                string first64Characters = userForEmailParameter.EmailHash;
+                string last64Characters = Models.User.ComputeSha256HashForString(userForEmailParameter.EmailHash + userForEmailParameter.Password);
+                // This statement will produce a string that's 128 chars long.
+                // First 64 chars will be the EmailHash that's unique for a user - this EmailHash will serve a identifier, to find the user that needs to be authenticated.
+                // Last 64 chars will be a hash that will serve as the authentication for all actions that require a certain degree of access priviliges.
+                cookieValue = first64Characters + last64Characters;
             }
             
-            return authenticationCookieHash;
+            return cookieValue;
         }
     }
 }
