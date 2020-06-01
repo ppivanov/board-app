@@ -35,7 +35,6 @@ namespace BoardWebApp.Controllers
                 {
                     HomePageModel homePageData = new HomePageModel(registrationSuccessful);
                     return RedirectToAction("Index", "Home", homePageData);
-                    //return RedirectToAction("Account", "Login");
                 }
             }
             return View(registrationInformation);
