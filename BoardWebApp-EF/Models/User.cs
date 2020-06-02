@@ -80,7 +80,7 @@ namespace BoardWebApp.Models
         //  Scrum Master  - 3
 
         // Returns the boards this user owns.
-        public List<Board> BoardsWhereThisUserIsOwner(BoardWebAppContext dbContext)
+        public List<Board> GetBoardsWhereThisUserIsOwner(BoardWebAppContext dbContext)
         {
             // Get the IDs of the boards where the user is the owner.
             List<int> boardIdsWhereOwner = dbContext.BoardMember.Where(bm => bm.MemberId == UserId && bm.MemberTypeId == 1).Select(bm => bm.BoardId).ToList();
@@ -104,7 +104,7 @@ namespace BoardWebApp.Models
         } 
         
         // Returns the projects this user owns.
-        public List<Project> ProjectsWhereThisUserIsOwner(BoardWebAppContext dbContext)
+        public List<Project> GetProjectsWhereThisUserIsOwner(BoardWebAppContext dbContext)
         {
             List<int> projectIdsWhereOwner = dbContext.ProjectMember.Where(pm => pm.MemberId == UserId && pm.MemberTypeId == 1).Select(pm => pm.ProjectId).ToList();
             List<Project> ownedProjects = dbContext.Project.Where(p => projectIdsWhereOwner.Contains(p.ProjectId))

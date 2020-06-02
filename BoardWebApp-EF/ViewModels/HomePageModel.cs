@@ -31,11 +31,11 @@ namespace BoardWebApp.ViewModels
         {
             // notifications here?
 
-            OwnedBoards = authenticatedUser.BoardsWhereThisUserIsOwner(dbContext);
+            OwnedBoards = authenticatedUser.GetBoardsWhereThisUserIsOwner(dbContext);
 
             MemberAccessToBoards = authenticatedUser.GetBoardsWhereThisUserIsMember(dbContext);
 
-            OwnedProjects = authenticatedUser.ProjectsWhereThisUserIsOwner(dbContext);
+            OwnedProjects = authenticatedUser.GetProjectsWhereThisUserIsOwner(dbContext);
 
             MemberAccessToProjects = authenticatedUser.GetProjectsWhereThisUserIsMember(dbContext);
         }
