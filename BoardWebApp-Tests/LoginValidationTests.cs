@@ -2,6 +2,7 @@
 using BoardWebApp.Models;
 using BoardWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
@@ -56,13 +57,8 @@ namespace BoardWebApp_Tests
                 var requestResult = Assert.IsType<ViewResult>(result);
                 var resultModel = Assert.IsAssignableFrom<SendLoginModel>(requestResult.ViewData.Model);
 
-                foreach (string s in resultModel.ValidationErrorMessages)
-                {
-                    _output.WriteLine("error: " + s + "\n");
-                }
-
                 //Verify that the error message is populated on the view's Model
-                Assert.True(resultModel.ValidationErrorMessages.Count > 0);
+                Assert.True(String.IsNullOrEmpty(resultModel.ErrorMessage) != true);
 
                 _dbContext = null;
             //}

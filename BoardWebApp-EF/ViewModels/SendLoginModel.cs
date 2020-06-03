@@ -8,11 +8,14 @@ namespace BoardWebApp.ViewModels
     public class SendLoginModel
     {
         public UserLoginModel userLoginModel { get; set; }
-        public List<string> ValidationErrorMessages { get; set; }
+        public string ErrorMessage { get; set; }
         public string LogoutMessage { get; set; }
 
         public SendLoginModel() {
-            ValidationErrorMessages = new List<string>();
+            
+        }
+        public SendLoginModel(string errorMessage) {
+            ErrorMessage = errorMessage;
         }
     }
 }

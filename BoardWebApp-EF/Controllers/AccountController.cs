@@ -56,8 +56,7 @@ namespace BoardWebApp.Controllers
         [HttpGet]
         public IActionResult Login(string errorMessage)
         {
-            SendLoginModel errorMessageModel = new SendLoginModel();
-            errorMessageModel.ValidationErrorMessages.Add(errorMessage);
+            SendLoginModel errorMessageModel = new SendLoginModel(errorMessage);
             return View(errorMessageModel);
         }
 
@@ -85,6 +84,7 @@ namespace BoardWebApp.Controllers
             else
             {
                 Console.WriteLine("Log in failed!");
+                LoginInformation.ErrorMessage = "Invalid credentials - log in failed!";
                 return View(LoginInformation);
             }
         }
