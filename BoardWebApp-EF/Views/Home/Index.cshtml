@@ -1,14 +1,51 @@
-﻿@model string
+﻿@model BoardWebApp.ViewModels.HomePageModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@if(Model != null)
+@if (Model != null)
 {
-    <div style="background-color: forestgreen; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@Model</div>
+    @if (Model.Message != null)
+    {
+        <div style="background-color: forestgreen; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@Model.Message</div>
+    }
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">BoardWebApp</h1>
 </div>
+@if (Model != null) 
+{
+    @if (Model.OwnedBoards != null)
+    {
+        <h2>Boards you own</h2>
+        @foreach (BoardWebApp.Models.Board ownedBoard in Model.OwnedBoards)
+        {
+            <div style="background-color: orange; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@ownedBoard.BoardName</div>
+        }
+    }
+    @if (Model.MemberAccessToBoards != null)
+    {
+        <h2>Boards you're a member of</h2>
+        @foreach (BoardWebApp.Models.Board memberInBoard in Model.MemberAccessToBoards)
+        {
+            <div style="background-color: orange; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@memberInBoard.BoardName</div>
+        }
+    }
+    @if (Model.OwnedProjects != null)
+    {
+        <h2>Projects you own</h2>
+        @foreach (BoardWebApp.Models.Project ownedProject in Model.OwnedProjects)
+        {
+            <div style="background-color: orange; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@ownedProject.ProjectName</div>
+        }
+    }
+    @if (Model.MemberAccessToProjects != null && Model.MemberAccessToProjects.Count > 0)
+    {
+        <h2>Projects you're a member of @Model.MemberAccessToProjects.Count</h2>
+        @foreach (BoardWebApp.Models.Project memberInProject in Model.MemberAccessToProjects)
+        {
+            <div style="background-color: orange; opacity: 0.4; width:80%; height: 10%; margin: 1em auto 2em auto; color: black;">@memberInProject.ProjectName</div>
+        }
+    }
+}

@@ -33,8 +33,8 @@ namespace BoardWebApp.Controllers
             {
                 if (UserRegistrationModel.SaveUser(registrationInformation.userRegistrationModel, _dbContext))
                 {
-                    return RedirectToAction("Index", "Home", new { @message = registrationSuccessful });
-                    //return RedirectToAction("Account", "Login");
+                    HomePageModel homePageData = new HomePageModel(registrationSuccessful);
+                    return RedirectToAction("Index", "Home", homePageData);
                 }
             }
             return View(registrationInformation);
@@ -54,9 +54,11 @@ namespace BoardWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string errorMessage)
         {
-            return View();
+            SendLoginModel errorMessageModel = new SendLoginModel();
+            errorMessageModel.ValidationErrorMessages.Add(errorMessage);
+            return View(errorMessageModel);
         }
 
         [HttpPost]
@@ -77,7 +79,8 @@ namespace BoardWebApp.Controllers
                 };
                 Response.Cookies.Append(CookieId, cookieValue, cookieOptions);
         /****** COOKIE SETUP *******/
-                return RedirectToAction("Index", "Home", new { @message = LoginSuccessful });
+                HomePageModel homePageData = new HomePageModel(LoginSuccessful);
+                return RedirectToAction("Index", "Home", homePageData);
             }
             else
             {
