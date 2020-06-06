@@ -40,5 +40,6 @@ namespace BoardWebApp.ViewModels
             MemberAccessToProjects = authenticatedUser.GetProjectsWhereThisUserIsMember(dbContext);
         }
 
+       
     }
 }

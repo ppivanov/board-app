@@ -121,5 +121,31 @@ namespace BoardWebApp.Models
             return projectsWhereUserIsMember;
         }
 
+        // Returns a bool value if the user is a member or an owner of a board
+        public bool IsUserAnyTypeOfMemberForBoard(int boardId, BoardWebAppContext dbContext)
+        {
+            var board = dbContext.BoardMember.Where(o => o.BoardId == boardId && UserId == o.MemberId).Select(o => o.BoardId).ToList().Count > 0;
+            return board;
+        }
+
+        public bool IsUserAnyTypeOfMemberForProject(int? projectId, BoardWebAppContext dbContext)
+        {
+            var project = dbContext.ProjectMember.Where(o => o.ProjectId == projectId && UserId == o.MemberId).Select(o => o.ProjectId).ToList().Count > 0;
+            return project;
+        }
+
+        // Returns a bool value if the user is any type of member for the specified board
+        public bool DoesUserHaveAccessToBoard(int boardId, BoardWebAppContext dbContext)
+        {
+            int? projectId = dbContext.Board.Where(o => o.BoardId == boardId).Select(o => o.ProjectId).ToList().FirstOrDefault();
+            if(projectId != null)
+            {
+                return IsUserAnyTypeOfMemberForProject(projectId, dbContext);
+            }
+            else
+            {
+                return IsUserAnyTypeOfMemberForBoard(boardId, dbContext);
+            }
+        }
     }
 }
