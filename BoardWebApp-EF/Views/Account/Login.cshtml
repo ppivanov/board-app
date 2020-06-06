@@ -18,13 +18,10 @@
             @* This div displays all failed validations that are performed on UserRegistrationModel *@
             <!-- <div asp-validation-summary="All" class="text-danger"></div> -->
             <div style="color: #dc3545;">
-                @if (Model != null && Model.ValidationErrorMessages != null)
+                @if (Model != null && Model.ErrorMessage != null)
                 {
-                    @foreach (var ErrorMessage in Model.ValidationErrorMessages)
-                    {
-                        @ErrorMessage
-                        <br />
-                    }
+                    @Model.ErrorMessage
+                    <br />
                 }
             </div>
             <div class="form-group">

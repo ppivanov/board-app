@@ -20,10 +20,9 @@ namespace BoardWebApp.ViewModels
         
         public static bool LoginCredentialsMatchDatabaseRecord(SendLoginModel LoginInformation, BoardWebAppContext dbContext)
         {
-            List<string> ValidationErrorMessages = LoginInformation.ValidationErrorMessages;
-            if (LoginFieldsNotNullStatic(LoginInformation.userLoginModel, ValidationErrorMessages))
+            if (LoginFieldsNotNullStatic(LoginInformation.userLoginModel))
             {
-                if (ArePlainEmailAndPasswordHashMatchingLoginInformationStatic(LoginInformation.userLoginModel, ValidationErrorMessages, dbContext))
+                if (ArePlainEmailAndPasswordHashMatchingLoginInformationStatic(LoginInformation.userLoginModel, dbContext))
                 {
                     //success
                     return true;
@@ -32,15 +31,15 @@ namespace BoardWebApp.ViewModels
             return false;
         }
 
-        public static bool LoginFieldsNotNullStatic(UserLoginModel LoginInformation, List<string> ValidationErrorMessages)
+        public static bool LoginFieldsNotNullStatic(UserLoginModel LoginInformation)
         {
             bool outcome = true;
-            if (String.IsNullOrEmpty(LoginInformation.Email)) { ValidationErrorMessages.Add("No email - no access!"); outcome = false; }
-            if (String.IsNullOrEmpty(LoginInformation.Password)) { ValidationErrorMessages.Add("At least try guessing the password!"); outcome = false; }
+            if (String.IsNullOrEmpty(LoginInformation.Email)) { outcome = false; }
+            if (String.IsNullOrEmpty(LoginInformation.Password)) { outcome = false; }
             return outcome;
         }
 
-        public static bool ArePlainEmailAndPasswordHashMatchingLoginInformationStatic(UserLoginModel LoginInformation, List<string> ValidationErrorMessages, BoardWebAppContext dbContext)
+        public static bool ArePlainEmailAndPasswordHashMatchingLoginInformationStatic(UserLoginModel LoginInformation, BoardWebAppContext dbContext)
         {
             User userFromQuery = dbContext.User.Where(user => user.Email == LoginInformation.Email).FirstOrDefault();
             if(userFromQuery != null)
@@ -55,7 +54,6 @@ namespace BoardWebApp.ViewModels
                     }
                 }
             }
-            ValidationErrorMessages.Add("Invalid credentials - log in failed!");
             return false;
         }
 
