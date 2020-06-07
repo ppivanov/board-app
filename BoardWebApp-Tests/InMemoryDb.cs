@@ -49,7 +49,7 @@ namespace BoardWebApp_Tests
                 new Project
                 {
                     ProjectId = 1,
-                    ProjectName = "NewApp",
+                    ProjectName = "New App",
                     ProjectDescription = "Creating a new App"
                 }
             );
@@ -67,7 +67,7 @@ namespace BoardWebApp_Tests
                 new Board
                 {
                     BoardId = 1,
-                    BoardName = "[NewApp] - Sprint Board",
+                    BoardName = "[New App] - Sprint Board",
                     BoardDescription = "This is the sprint board for the project New App.",
                     BoardTypeId = 1,
                     ProjectId = 1
@@ -75,7 +75,7 @@ namespace BoardWebApp_Tests
                 new Board
                 {
                     BoardId = 2,
-                    BoardName = "[NewApp] - Backlog",
+                    BoardName = "[New App] - Backlog",
                     BoardDescription = "This is the backlog for the project New App.",
                     BoardTypeId = 2,
                     ProjectId = 1
@@ -83,7 +83,7 @@ namespace BoardWebApp_Tests
                 new Board
                 {
                     BoardId = 3,
-                    BoardName = "[NewApp] - History Board",
+                    BoardName = "[New App] - History Board",
                     BoardDescription = "This is the history board for the project New App.",
                     BoardTypeId = 3,
                     ProjectId = 1
@@ -99,8 +99,14 @@ namespace BoardWebApp_Tests
                     BoardId = 5,
                     BoardName = "Trudy's board",
                     BoardDescription = "Trudy's board"
+                },
+                new Board
+                {
+                    BoardId = 6,
+                    BoardName = "Trudy's second board",
+                    BoardDescription = "Trudy's second board"
                 }
-            );
+            );  
             dbContext.BoardColumn.AddRange(
                 new BoardColumn { ColumnId = 1, ColumnName = "Up next", ColumnOrder = 1, BoardId = 1 },
                 new BoardColumn { ColumnId = 2, ColumnName = "In Progress", ColumnOrder = 2, BoardId = 1 },
@@ -110,7 +116,8 @@ namespace BoardWebApp_Tests
                 new BoardColumn { ColumnId = 6, ColumnName = "Sprint Feb", ColumnOrder = 2, BoardId = 3 },
                 new BoardColumn { ColumnId = 7, ColumnName = "Sprint Mar", ColumnOrder = 3, BoardId = 3 },
                 new BoardColumn { ColumnId = 8, ColumnName = "Zack", ColumnOrder = 1, BoardId = 4 },
-                new BoardColumn { ColumnId = 9, ColumnName = "Trudy", ColumnOrder = 1, BoardId = 5 }
+                new BoardColumn { ColumnId = 9, ColumnName = "Trudy", ColumnOrder = 1, BoardId = 5 },
+                new BoardColumn { ColumnId = 10, ColumnName = "Trudy 2", ColumnOrder = 1, BoardId = 6 }
             );
             dbContext.ProjectMember.AddRange(
                 new ProjectMember{ ProjectId = 1, MemberId = 1, MemberTypeId = 1 }, // Trudy as the owner of 'New App'
@@ -119,8 +126,10 @@ namespace BoardWebApp_Tests
             dbContext.BoardMember.AddRange(
                 new BoardMember{ BoardId = 4, MemberId = 2, MemberTypeId = 1 }, // Zack's shared board - Zack as owner
                 new BoardMember{ BoardId = 4, MemberId = 1, MemberTypeId = 2 }, // Zack's shared board - Trudy as member
-                new BoardMember{ BoardId = 4, MemberId = 3, MemberTypeId = 2 }, // Alicia's shared board - Trudy as member
-                new BoardMember{ BoardId = 5, MemberId = 1, MemberTypeId = 1 } // Trudy's board - Trudy as owner
+                new BoardMember{ BoardId = 4, MemberId = 3, MemberTypeId = 2 }, // Zack's shared board - Alicia as member
+                new BoardMember{ BoardId = 5, MemberId = 1, MemberTypeId = 1 }, // Trudy's board - Trudy as owner
+                new BoardMember{ BoardId = 6, MemberId = 1, MemberTypeId = 1 }, // Trudy's second board - Trudy as owner
+                new BoardMember{ BoardId = 6, MemberId = 3, MemberTypeId = 2 } // Trudy's second board - Alicia as member
             );
             
             //TicketType

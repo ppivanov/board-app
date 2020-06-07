@@ -1,11 +1,11 @@
-﻿using BoardWebApp.Controllers;
-using BoardWebApp.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+using BoardWebApp.ViewModels;
 using BoardWebApp.Models;
 
 namespace BoardWebApp_Tests
@@ -43,29 +43,20 @@ namespace BoardWebApp_Tests
         // --------------------- The FOUR tests below are testing the methods retrieving the Boards and Projects a user owns and they're a member of ---------------------
         [Theory]
         [InlineData("notaracist@murica.com", (object)(new string[]{"Zack's shared board"}))]
-        [InlineData("trudy@board.com", (object)(new string[]{ "Trudy's board"}))]
+        [InlineData("trudy@board.com", (object)(new string[]{ "Trudy's board", "Trudy's second board"}))]
         [InlineData("alicia@board.com", (object)(new string[]{ /* doesn't own any boards */ }))]
         public void GetBoardsWhereOwner(string userEmail, string[] expectedBoardNames)
         {
-            List<User> allUsers = new List<User>(_dbContext.User);
-            User userForEmail = null;
-            foreach(User u in allUsers)
-            {
-                if(u.Email == userEmail)
-                    userForEmail = u;
-            }
+            User userForEmail = _dbContext.User.Where(u => u.Email == userEmail).SingleOrDefault();
             List<string> actualBoardNames = new List<string>();
-            List<Board> actualBoards = userForEmail.GetBoardsWhereThisUserIsOwner(_dbContext);
+            List<Board> actualBoards = userForEmail.GetBoardsWhereThisUserIsOwner(_dbContext); // gets the boards
+            // add the boards' name to the list
             foreach(Board actualBoard in actualBoards)
             {
-                _output.WriteLine("Actual board name : " + actualBoard.BoardName);
                 actualBoardNames.Add(actualBoard.BoardName);
             }
 
             bool expectedSizeEqActualSize = (expectedBoardNames.Length == actualBoardNames.Count);
-            // _output.WriteLine("Expected size : " + expectedBoardNames.Length);
-            // _output.WriteLine("Actual size : " + actualBoardNames.Count);
-            // _output.WriteLine("result : " + expectedSizeEqActualSize);
             Assert.True(expectedSizeEqActualSize);
             // if the size is not the same, not point trying to verify the board names are the expected ones
             if(expectedSizeEqActualSize == false)
@@ -77,10 +68,104 @@ namespace BoardWebApp_Tests
                 // for each of the expected board names - verify that it's part of the returned List
                 foreach(string expected in expectedBoardNames)
                 {   
-                    _output.WriteLine("Expected board name : " + expected);
                     bool actualListContainsExpectedBoardName = actualBoardNames.Contains(expected);
-                    // this isn't working
                     Assert.True(actualListContainsExpectedBoardName);
+                }
+            }
+        }
+        [Theory]
+        [InlineData("notaracist@murica.com", (object)(new string[]{/* Not a member of any board */}))]
+        [InlineData("trudy@board.com", (object)(new string[]{ "Zack's shared board"}))]
+        [InlineData("alicia@board.com", (object)(new string[]{ "Zack's shared board", "Trudy's second board" }))]
+        public void GetBoardsWhereMember(string userEmail, string[] expectedBoardNames)
+        {
+            User userForEmail = _dbContext.User.Where(u => u.Email == userEmail).SingleOrDefault();
+            List<string> actualBoardNames = new List<string>();
+            List<Board> actualBoards = userForEmail.GetBoardsWhereThisUserIsMember(_dbContext); // gets the boards
+            // add the boards' name to the list
+            foreach(Board actualBoard in actualBoards)
+            {
+                actualBoardNames.Add(actualBoard.BoardName);
+            }
+
+            bool expectedSizeEqActualSize = (expectedBoardNames.Length == actualBoardNames.Count);
+            Assert.True(expectedSizeEqActualSize);
+            // if the size is not the same, not point trying to verify the board names are the expected ones
+            if(expectedSizeEqActualSize == false)
+            {
+                return;
+            } 
+            else
+            {
+                // for each of the expected board names - verify that it's part of the returned List
+                foreach(string expected in expectedBoardNames)
+                {   
+                    bool actualListContainsExpectedBoardName = actualBoardNames.Contains(expected);
+                    Assert.True(actualListContainsExpectedBoardName);
+                }
+            }
+        }
+        [Theory]
+        [InlineData("notaracist@murica.com", (object)(new string[]{ "New App" }))]
+        [InlineData("trudy@board.com", (object)(new string[]{ /* Trudy's the owner */ }))]
+        [InlineData("alicia@board.com", (object)(new string[]{ /* Not a member of any project */ }))]
+        public void GetProjectsWhereMember(string userEmail, string[] expectedProjectNames)
+        {
+            User userForEmail = _dbContext.User.Where(u => u.Email == userEmail).SingleOrDefault();
+            List<string> actualProjectNames = new List<string>();
+            List<Project> actualProjects = userForEmail.GetProjectsWhereThisUserIsMember(_dbContext); // gets the projects
+            // add the project's' name to the list
+            foreach(Project actualProject in actualProjects)
+            {
+                actualProjectNames.Add(actualProject.ProjectName);
+            }
+
+            bool expectedSizeEqActualSize = (expectedProjectNames.Length == actualProjectNames.Count);
+            Assert.True(expectedSizeEqActualSize);
+            // if the size is not the same, not point trying to verify the project names are the expected ones
+            if(expectedSizeEqActualSize == false)
+            {
+                return;
+            } 
+            else
+            {
+                // for each of the expected project names - verify that it's part of the returned List
+                foreach(string expected in expectedProjectNames)
+                {   
+                    bool actualListContainsExpectedProjectName = actualProjectNames.Contains(expected);
+                    Assert.True(actualListContainsExpectedProjectName);
+                }
+            }
+        }
+        [Theory]
+        [InlineData("notaracist@murica.com", (object)(new string[]{ /* Does not own any projects */ }))]
+        [InlineData("trudy@board.com", (object)(new string[]{ "New App" }))]
+        [InlineData("alicia@board.com", (object)(new string[]{ /* Does not own any projects */ }))]
+        public void GetProjectsWhereOwner(string userEmail, string[] expectedProjectNames)
+        {
+            User userForEmail = _dbContext.User.Where(u => u.Email == userEmail).SingleOrDefault();
+            List<string> actualProjectNames = new List<string>();
+            List<Project> actualProjects = userForEmail.GetProjectsWhereThisUserIsOwner(_dbContext); // gets the projects
+            // add the project's' name to the list
+            foreach(Project actualProject in actualProjects)
+            {
+                actualProjectNames.Add(actualProject.ProjectName);
+            }
+
+            bool expectedSizeEqActualSize = (expectedProjectNames.Length == actualProjectNames.Count);
+            Assert.True(expectedSizeEqActualSize);
+            // if the size is not the same, not point trying to verify the project names are the expected ones
+            if(expectedSizeEqActualSize == false)
+            {
+                return;
+            } 
+            else
+            {
+                // for each of the expected project names - verify that it's part of the returned List
+                foreach(string expected in expectedProjectNames)
+                {   
+                    bool actualListContainsExpectedProjectName = actualProjectNames.Contains(expected);
+                    Assert.True(actualListContainsExpectedProjectName);
                 }
             }
         }
