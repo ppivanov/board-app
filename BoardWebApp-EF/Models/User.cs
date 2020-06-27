@@ -79,45 +79,47 @@ namespace BoardWebApp.Models
         //  Member        - 2
         //  Scrum Master  - 3
 
+        public List<Board> GetBoardsWhereThisUserIsOfMemberTypeParameter(int memberTypeId_p, BoardWebAppContext dbContext)
+        {
+            List<int> boardIdsFromQuery = dbContext.BoardMember.Where(bm => bm.MemberId == this.UserId && bm.MemberTypeId == memberTypeId_p).Select(bm => bm.BoardId).ToList();
+            // Get the boards from the BoardIds retrieved above.
+            List<Board> boards = dbContext.Board.Where(b => boardIdsFromQuery.Contains(b.BoardId))
+                                            .ToList();
+            return boards;
+        }
+        public List<Project> GetProjectsWhereThisUserIsOfMemberTypeParameter(int memberTypeId_p, BoardWebAppContext dbContext)
+        {
+            List<int> projectIdsFromQuery = dbContext.ProjectMember.Where(pm => pm.MemberId == this.UserId && pm.MemberTypeId == memberTypeId_p).Select(pm => pm.ProjectId).ToList();
+            // Get the projects from the ProjectIds retrieved above.
+            List<Project> projects = dbContext.Project.Where(p => projectIdsFromQuery.Contains(p.ProjectId))
+                                            .ToList();
+            return projects;
+        }
+
         // Returns the boards this user owns.
         public List<Board> GetBoardsWhereThisUserIsOwner(BoardWebAppContext dbContext)
         {
-            // Get the IDs of the boards where the user is the owner.
-            List<int> boardIdsWhereOwner = dbContext.BoardMember.Where(bm => bm.MemberId == UserId && bm.MemberTypeId == 1).Select(bm => bm.BoardId).ToList();
-            // Get the boards from the BoardIds retrieved above.
-            List<Board> ownedBoards = dbContext.Board.Where(p => boardIdsWhereOwner.Contains(p.BoardId))
-                                            .ToList();
-            
+            List<Board> ownedBoards = this.GetBoardsWhereThisUserIsOfMemberTypeParameter(1, dbContext);
             return ownedBoards;
         }
         
         // Returns the boards this user is a member of but does not own.
         public List<Board> GetBoardsWhereThisUserIsMember(BoardWebAppContext dbContext)
         {
-            // Get the IDs of the boards where the user is a member.
-            List<int> boardIdsWhereMember = dbContext.BoardMember.Where(bm => bm.MemberId == UserId && bm.MemberTypeId == 2).Select(bm => bm.BoardId).ToList();
-            // Get the projects from the BoardIds retrieved above.
-            List<Board> boardsWhereUserIsMember = dbContext.Board.Where(b => boardIdsWhereMember.Contains(b.BoardId))
-                                            .ToList();
-
+            List<Board> boardsWhereUserIsMember = this.GetBoardsWhereThisUserIsOfMemberTypeParameter(2, dbContext);
             return boardsWhereUserIsMember;
         } 
         
         // Returns the projects this user owns.
         public List<Project> GetProjectsWhereThisUserIsOwner(BoardWebAppContext dbContext)
         {
-            List<int> projectIdsWhereOwner = dbContext.ProjectMember.Where(pm => pm.MemberId == UserId && pm.MemberTypeId == 1).Select(pm => pm.ProjectId).ToList();
-            List<Project> ownedProjects = dbContext.Project.Where(p => projectIdsWhereOwner.Contains(p.ProjectId))
-                                                .ToList();
+            List<Project> ownedProjects = this.GetProjectsWhereThisUserIsOfMemberTypeParameter(1, dbContext);
             return ownedProjects;
         }
         // Returns the projects this user is a member of but does not own.
         public List<Project> GetProjectsWhereThisUserIsMember(BoardWebAppContext dbContext)
         {
-            List<int> projectIdsWhereMember = dbContext.ProjectMember.Where(pm => pm.MemberId == UserId && pm.MemberTypeId == 2).Select(pm => pm.ProjectId).ToList();
-            List<Project> projectsWhereUserIsMember = dbContext.Project.Where(p => projectIdsWhereMember.Contains(p.ProjectId))
-                                            .ToList();
-
+            List<Project> projectsWhereUserIsMember = this.GetProjectsWhereThisUserIsOfMemberTypeParameter(2, dbContext);
             return projectsWhereUserIsMember;
         }
 
