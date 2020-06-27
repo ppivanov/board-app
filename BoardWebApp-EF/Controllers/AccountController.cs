@@ -70,7 +70,7 @@ namespace BoardWebApp.Controllers
                 string formEmail = LoginInformation.userLoginModel.Email;
 
                 string cookieValue = UserLoginModel.CalculateHashForCookieForUserEmailAndDBContext(formEmail, _dbContext);
-                Console.WriteLine("Login successful!");
+                // Console.WriteLine(LoginSuccessful);
         /****** COOKIE SETUP *******/
                 CookieOptions cookieOptions = new CookieOptions()
                 {
@@ -83,7 +83,7 @@ namespace BoardWebApp.Controllers
             }
             else
             {
-                Console.WriteLine("Log in failed!");
+                // Console.WriteLine("Log in failed!");
                 LoginInformation.ErrorMessage = "Invalid credentials - log in failed!";
                 return View(LoginInformation);
             }

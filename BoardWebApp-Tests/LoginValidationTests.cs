@@ -1,15 +1,15 @@
-﻿using BoardWebApp.Controllers;
-using BoardWebApp.Models;
-using BoardWebApp.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
+using BoardWebApp.Controllers;
+using BoardWebApp.Models;
+using BoardWebApp.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoardWebApp_Tests
 {
-    public class LoginValidationTests
+    public class LoginValidationTests : IDisposable
     {
         private BoardWebAppContext _dbContext;
         private readonly ITestOutputHelper _output;
@@ -17,22 +17,23 @@ namespace BoardWebApp_Tests
         public LoginValidationTests(ITestOutputHelper testOutputHelper)
         {
             _output = testOutputHelper;
+            _dbContext = InMemoryDb.InitInMemoryDbContext();
+        }
+        public void Dispose()
+        {
+            _dbContext.Database.EnsureDeleted();;
         }
 
+
+        // --------------------- This test verifies that whenever a user fails to login, they're displayed with the same page and an error message is to the view. ---------------------
         [Theory]
-        //[InlineData("trudy@board.com", "P@ssword1", true)] // All good
+        //[InlineData("trudy@board.com", "P@ssword1", true)] // All good --- Pavel: I can't mock the Http request. Give it a go if you want, would be good test to make sure we don't break it.
         [InlineData("", "P@ssword1", false)] // email empty
         [InlineData("trudy@board.com", "", false)] // password empty
         [InlineData("trudy@board.com", "P@ssword", false)] // Wrong password
         [InlineData("trudy@board.c", "P@ssword1", false)] // user doesn't exist
         public void PostLoginDisplaysErrorMessage(string email, string password, bool expectedResult)
         {
-            _dbContext = RegistrationValidationTests.InitInMemoryDbContext();
-            foreach(User u in _dbContext.User)
-            {
-                _output.WriteLine("User available for test - " + u.Email);
-            }
-
             SendLoginModel loginInfo = new SendLoginModel()
             {
                 userLoginModel = new UserLoginModel()
@@ -42,26 +43,12 @@ namespace BoardWebApp_Tests
                 }
             };
 
-            _output.WriteLine("form data - email: " + loginInfo.userLoginModel.Email);
-
             var result = new AccountController(_dbContext).Login(loginInfo);
+            var requestResult = Assert.IsType<ViewResult>(result);
+            var resultModel = Assert.IsAssignableFrom<SendLoginModel>(requestResult.ViewData.Model);
 
-            //if (expectedResult == true)
-            //{
-            //    _output.WriteLine("Log in success");
-            //    Assert.IsType<RedirectToActionResult>(result);
-            //}
-            //else
-            //{
-                _output.WriteLine("Log in failed");
-                var requestResult = Assert.IsType<ViewResult>(result);
-                var resultModel = Assert.IsAssignableFrom<SendLoginModel>(requestResult.ViewData.Model);
-
-                //Verify that the error message is populated on the view's Model
-                Assert.True(String.IsNullOrEmpty(resultModel.ErrorMessage) != true);
-
-                _dbContext = null;
-            //}
+            //Verify that the error message is populated on the view's Model
+            Assert.True(String.IsNullOrEmpty(resultModel.ErrorMessage) != true);
         }
     }
 }
